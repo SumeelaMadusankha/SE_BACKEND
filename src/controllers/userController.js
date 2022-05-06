@@ -1,4 +1,4 @@
-const user = require('../services/user.service');
+const user = require('../services/userService');
 
 
 

@@ -1,28 +1,18 @@
 const express = require('express'),
   app = express(),
-  mysql = require('mysql'), // import mysql module
   cors = require('cors'),
   bodyParser = require('body-parser');
-  // const dbConfig = require('../configs/db.config');
-
-
-
- // setup database
-db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'vertualGym'
-  })
-  
-  
+const sequelize = require("./src/configs/database");
+const UserModel = require("./src/models/userModel");
+sequelize.sync({ force: true });
 
 // make server object that contain port property and the value for our server.
 var server = {
   port: 4040
 };
+const req = require('express/lib/request');
 // routers
-const usersRouter = require('./src/routes/user.route');
+const usersRouter = require('./src/routes/userRoute');
 
 
 
