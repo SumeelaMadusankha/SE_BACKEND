@@ -1,25 +1,43 @@
-// const db = require('./db.service');
-const helper = require('../utils/helper.util');
-// const config = require('../configs/general.config');
+const {UserModel,validateUser} =require("../models/userModel");
 
 
 async function register(req, res) {
-    let sql = `INSERT INTO users(firstName, lastName) VALUES (?)`;
-    let values = [
-      req.body.firstName,
-      req.body.lastName
-    ];
-    db.query(sql, [values], function(err, data, fields) {
-      if (err) throw err;
+    
+    // let values = {
+    //   firstName: req.body.firstName,
+    //   lastName: req.body.lastName,  
+    // email: req.body.email,
+    // mobileNo:req.mobileNo,
+    // gender: req.gender,
+    // birthday: req.birthday,
+    // address: req.address,
+    // weight: req.weight,
+    // height: req.height,
 
-      return data;
-    //   res.json({
-    //     status: 200,
-    //     message: "New user added successfully",
-    //      data:data
-    //   })
-    })
-  }
+    // };
+    const  firstName = req.body.firstName,
+           lastName = req.body.lastName,
+           email= req.body.email,
+           mobileNo=req.body.mobileNo,
+           gender= req.body.gender,
+           birthday= req.body.birthday,
+           address= req.body.address,
+           weight= req.body.weight,
+           height= req.body.height;
+
+
+
+
+
+    const v = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height});
+    return v;
+   
+  } 
+  
+
+
+
+
   module.exports = {
    register
   }
