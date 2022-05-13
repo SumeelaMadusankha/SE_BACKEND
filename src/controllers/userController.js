@@ -13,8 +13,24 @@ async function register(req, res, next) {
     }
   }
 
-  module.exports = {
+
+
+async function getUsers(req,res,next){
+  
+  const userList = await user.fetchUsers();
+  
+  if(userList === null){
+    res.send("NO Records");
+  }else{
+    res.send(userList);
+  }
+  
+  next();
+}
+
+module.exports = {
     
-    register,
-    
-  };
+  register,
+  getUsers
+  
+};
