@@ -33,11 +33,22 @@ async function register(req, res) {
     return v;
    
   } 
+
+  async function fetchUsers (req,res){
+       
+       const users = await UserModel.findAll();
+       if (users === null) {
+       return null;
+       } else {
+       console.log(users);
+       return users;       }
+  }
   
 
 
 
 
   module.exports = {
-   register
+   register,
+   fetchUsers
   }
