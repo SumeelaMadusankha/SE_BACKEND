@@ -1,8 +1,8 @@
 const {DataTypes} = require('sequelize');
-
+const { genSaltSync, hashSync, compareSync } = require('bcryptjs');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
-const { string } = require('joi');
+
 const UserModel =  sequelize.define("users",
 {
     id:{
@@ -53,6 +53,8 @@ const UserModel =  sequelize.define("users",
         type:DataTypes.STRING,
         allowNull:false
       },
+         
+  
       role:{
         type:DataTypes.ENUM("Admin","User")
       }
@@ -68,6 +70,7 @@ const UserModel =  sequelize.define("users",
 
 );
 
+
 function validateUser(user) {
   const schema = Joi.object({
     firstName: Joi.string().min(1).max(50).required(),
@@ -79,6 +82,7 @@ function validateUser(user) {
     address: Joi.string().min(1).max(50).required(),
     weight: Joi.number().positive().greater(0).required(),
     height: Joi.number().positive().greater(0).required(),
+    username: Joi.string().min(6).required(),
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
     role: Joi.string().valid('Admin', 'User').required()
@@ -86,7 +90,23 @@ function validateUser(user) {
 
   return schema.validate(user)
 }
+
+
+
+
+function hashPassword(password) {
+    const salt = genSaltSync(12);
+    const hashedPassword = hashSync(password, salt);
+    return hashedPassword;
+}
+
+ function verifyPassword(passwordAttempted, hashedPassword) {
+    return compareSync(passwordAttempted, hashedPassword);
+}
+
 module.exports = {
   validateUser,
-  UserModel
+  UserModel,
+  hashPassword,
+  verifyPassword
  }
