@@ -1,20 +1,9 @@
-const {UserModel,validateUser} =require("../models/userModel");
+const {UserModel,validateUser,hashPassword} =require("../models/userModel");
 
 
 async function register(req, res) {
     
-    // let values = {
-    //   firstName: req.body.firstName,
-    //   lastName: req.body.lastName,  
-    // email: req.body.email,
-    // mobileNo:req.mobileNo,
-    // gender: req.gender,
-    // birthday: req.birthday,
-    // address: req.address,
-    // weight: req.weight,
-    // height: req.height,
-
-    // };
+    
     const  firstName = req.body.firstName,
            lastName = req.body.lastName,
            email= req.body.email,
@@ -23,13 +12,17 @@ async function register(req, res) {
            birthday= req.body.birthday,
            address= req.body.address,
            weight= req.body.weight,
-           height= req.body.height;
+           height= req.body.height,
+           username=req.body.username,
+           password=hashPassword(req.body.password),
+           
+           role=req.body.role;
 
 
 
 
 
-    const v = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height});
+    const v = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height,username:username,password:password,role:role});
     return v;
    
   } 
