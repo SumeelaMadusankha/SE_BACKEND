@@ -4,6 +4,6 @@ module.exports = function (req, res, next) {
     // 403 Forbidden (Here even they have correct jwt they cant access)
     
     if (req.user.role!='Admin') return res.status(403).send('Access denied.');
-  
+  console.log("hello world");
     next();
   }

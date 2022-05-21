@@ -7,6 +7,6 @@ const express = require('express'),
 
 router.post('/signin',authController.signin );
 
-
+console.log("hello world");
 
 module.exports = router; 
