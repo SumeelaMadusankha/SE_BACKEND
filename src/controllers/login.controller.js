@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 async function testRun(req,res,next){
          const user = {
           id: 199832,
-          password : 'Nuwanjay'
+          password : 'Nuwanj ay'
         }
         
         const accessToken = jwt.sign(user,process.env.ACCESS_TOKEN_SECRET);

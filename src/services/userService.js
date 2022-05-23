@@ -1,20 +1,8 @@
-const {UserModel,validateUser} =require("../models/userModel");
+const {UserModel,validateUser} =require("../models");
 
 
 async function register(req, res) {
-    
-    // let values = {
-    //   firstName: req.body.firstName,
-    //   lastName: req.body.lastName,  
-    // email: req.body.email,
-    // mobileNo:req.mobileNo,
-    // gender: req.gender,
-    // birthday: req.birthday,
-    // address: req.address,
-    // weight: req.weight,
-    // height: req.height,
 
-    // };
     const  firstName = req.body.firstName,
            lastName = req.body.lastName,
            email= req.body.email,
@@ -29,14 +17,15 @@ async function register(req, res) {
 
 
 
-    const v = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height});
+    const v = await UserModel.UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height});
     return v;
    
   } 
 
   async function fetchUsers (req,res){
        
-       const users = await UserModel.findAll();
+     const users = await UserModel.UserModel.findAll();
+     //   const users = await UserModel.findAll();
        if (users === null) {
        return null;
        } else {
