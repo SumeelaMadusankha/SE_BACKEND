@@ -4,6 +4,7 @@ cors = require('cors'),
 bodyParser = require('body-parser');
 const sequelize = require("./src/configs/database");
 const UserModel = require("./src/models/userModel");
+
 sequelize.sync({ alter: true });
 
 // make server object that contain port property and the value for our server.

@@ -1,10 +1,10 @@
 const config = require('./config');
 
 const { Sequelize } = require('sequelize');
-
-const sequelize = new Sequelize("VertualGym","root", "", {
-    host: "localhost",
-    port: "3306",
+const {database,host,jwtPrivateKey,password,port,user}= require('../configs/config')
+const sequelize = new Sequelize(database,user, password, {
+    host: host,
+    port: port,
     dialect: 'mysql'
   });
   
