@@ -1,7 +1,8 @@
 const user = require('../services/userService');
-const {validateUser, UserModel} = require("../models/userModel")
+const {validateUser, UserModel} = require("../models/userModel");
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
+const _ = require('lodash');
 
 async function register(req, res, next) {
   const { error,value } = validateUser(req.body);
@@ -11,8 +12,9 @@ async function register(req, res, next) {
   if (usr) return res.status(400).send(usr);
   try {
    let  u = await user.register(req,res);
-    const token = jwt.sign({ _id: u._id, role: u.role },jwtPrivateKey);
+    const token = jwt.sign({ username: u.username, role: u.role },jwtPrivateKey);
     res.header('x-auth-token', token).send(u);
+    next();
      
     } catch (err) {
       console.error(`Error while creating user account`, err.message);
@@ -35,9 +37,33 @@ async function getUsers(req,res,next){
   next();
 }
 
+async function getProfileDetails(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    const decoded = jwt.verify(token, jwtPrivateKey);
+  
+    const details = await UserModel.findOne({ where: { username: decoded['username'] } });
+   
+    if(details === null){
+      res.send("NO Such user in the system");
+    }else{
+      res.send(_.pick(details, ['firstName','lastName','email','mobileNo','gender','birthday','address']));
+    }
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  
+  next();
+}
+
 module.exports = {
     
   register,
-  getUsers
+  getUsers,
+  getProfileDetails
   
 };

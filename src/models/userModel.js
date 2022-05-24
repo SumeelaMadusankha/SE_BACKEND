@@ -36,14 +36,7 @@ const UserModel =  sequelize.define("users",
           type: DataTypes.STRING,
           allowNull: false,
       },
-      weight: {
-          type: DataTypes.DOUBLE,
-          allowNull: false,
-      },
-      height: {
-          type: DataTypes.DOUBLE,
-          allowNull: false,
-      },
+      
       username:{
         type:DataTypes.STRING,
         allowNull:false,

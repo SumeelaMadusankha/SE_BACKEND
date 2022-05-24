@@ -11,8 +11,6 @@ async function register(req, res) {
            gender= req.body.gender,
            birthday= req.body.birthday,
            address= req.body.address,
-           weight= req.body.weight,
-           height= req.body.height,
            username=req.body.username,
            password=hashPassword(req.body.password),
            
@@ -22,7 +20,7 @@ async function register(req, res) {
 
 
 
-    const v = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height,username:username,password:password,role:role});
+    const v = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username,password:password,role:role});
     return v;
    
   } 

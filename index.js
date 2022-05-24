@@ -15,7 +15,7 @@ const usersRouter = require('./src/routes/userRoute');
 const authRouter = require('./src/routes/authRoute');
 
 app.get('/',(req,res) =>{
-  res.send("Hello Rocky");
+  res.send("Helo");
 })
 
 // use the modules

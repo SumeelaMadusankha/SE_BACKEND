@@ -14,7 +14,7 @@ async function signin(req, res) {
   
     const validPassword = verifyPassword(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid username or password.');
-    const token = jwt.sign({ _id: user._id, role: user.role },jwtPrivateKey);
+    const token = jwt.sign({ username:user.username, role: user.role },jwtPrivateKey);
     
     res.send(token);
   }
