@@ -13,14 +13,10 @@ async function register(req, res) {
            weight= req.body.weight,
            height= req.body.height;
 
-
-
-
-
     const v = await UserModel.UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,weight:weight,height:height});
     return v;
    
-  } 
+} 
 
   async function fetchUsers (req,res){
        
@@ -29,7 +25,7 @@ async function register(req, res) {
        if (users === null) {
        return null;
        } else {
-       console.log(users);
+       
        return users;       }
   }
   

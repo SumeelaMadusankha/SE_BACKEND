@@ -1,10 +1,10 @@
 const express = require('express'),
-  router = express.Router();
 
-  const {loginController} = require('../../controllers');
+router = express.Router();
 
-
-  router.get('/current:id',loginController.testRun);
-  router.post('/plan',loginController.testRun);
+  const {mealPlanController} = require('../../controllers');
+  router.post('/plan',mealPlanController.addMealPlan);
+  router.get('/plan/:id',mealPlanController.getMealPlanById);
+  router.get('/plans',mealPlanController.getAllMealPlans);
 
   module.exports = router;

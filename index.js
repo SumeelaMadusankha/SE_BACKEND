@@ -10,7 +10,7 @@ sequelize.sync({ alter: true });
 
 const req = require('express/lib/request');
 // routers
-const {userRoute,loginRoute} = require('./src/routes');
+const {userRoute,loginRoute,mealPlanRoute,workoutPlanRoute} = require('./src/routes');
 
 
 app.get('/',(req,res) =>{
@@ -23,6 +23,8 @@ app.use(bodyParser.json());
 // use router
 app.use('/users', userRoute);
 app.use('/app',loginRoute);
+app.use('/meal',mealPlanRoute);
+app.use('/workout',workoutPlanRoute);
 // starting the server
 const port =  process.env.PORT || 5000;
 app.listen( port , () => console.log(`Server started, listening port: ${port}`));
