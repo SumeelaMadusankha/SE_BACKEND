@@ -3,8 +3,9 @@ const express = require('express'),
   const userController = require('../controllers/userController');
 
   const auth=require("../middlewares/auth");
+  const admin=require("../middlewares/admin");
 // get user lists
-router.get('/list', userController.getUsers);
+router.get('/list',auth,admin, userController.getUsers);
 // create new user
 router.post('/register',userController.register);
 //get profile details

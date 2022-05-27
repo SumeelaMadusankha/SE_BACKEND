@@ -62,9 +62,15 @@ async function getProfileDetails(req,res,next){
 async function updateProfileDetails(req,res,next){
   const { error,value } = validateUpdateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message); 
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+   
   try {
+    const decoded = jwt.verify(token, jwtPrivateKey);
+    req.username=decoded['username'];
     let  u = await user.updateUserProfile(req,res);
-    
+    res.send(_.pick(u, ['firstName','lastName','email','mobileNo','gender','birthday','address']));
     next();
       
      } catch (err) {

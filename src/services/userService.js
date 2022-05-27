@@ -43,16 +43,32 @@ async function updateUserProfile(req,res){
            mobileNo=req.body.mobileNo,
            gender= req.body.gender,
            birthday= req.body.birthday,
-           address= req.body.address;
+           address= req.body.address,
+           username=req.username;
+
           try{
+          
             const result = await UserModel.update({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address},{
               where: {
-                username: 'Sumeela'
+                username: username
               }
             });
-          }catch(error){
+
             
+   
+            const details = await UserModel.findOne({ where: { username: username } });
+           
+            if(details === null){
+              res.send("NO Such user in the system");
+            }else{
+             return details;
+            }
+           
+          }catch(error){
+            res.status(400).send('Invalid token.');
           }
+          
+          
       
            
            
