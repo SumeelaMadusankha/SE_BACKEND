@@ -1,11 +1,21 @@
 
 
-
 const express = require('express'),
 router = express.Router();
-const authController = require('../controllers/adminController');
+const adminController = require('../controllers/adminController');
 
-router.post('/addAdmin',authController.addAdmin );
+const auth=require("../middlewares/auth");
+const admin=require("../middlewares/admin");
+
+
+// get user lists
+router.get('/userslist',auth,admin, adminController.getUsers);
+
+// get admin lists
+router.get('/adminslist',auth,admin, adminController.getAdmins);
+
+//add admin
+router.post('/addAdmin',auth,admin,adminController.addAdmin );
 
 
 

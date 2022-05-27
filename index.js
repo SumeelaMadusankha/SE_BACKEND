@@ -3,8 +3,12 @@ app = express(),
 cors = require('cors'),
 bodyParser = require('body-parser');
 const sequelize = require("./src/configs/database");
-const UserModel = require("./src/models/userModel");
+const {UserModel} = require("./src/models/userModel");
+const {AdminModel}= require("./src/models/adminModel");
+const {AuthModel} = require("./src/models/authModel");
 
+UserModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
+AdminModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
 sequelize.sync({ alter: true });
 
 // make server object that contain port property and the value for our server.

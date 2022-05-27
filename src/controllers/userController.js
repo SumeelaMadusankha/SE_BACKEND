@@ -24,18 +24,7 @@ async function register(req, res, next) {
 
 
 
-async function getUsers(req,res,next){
-  
-  const userList = await user.fetchUsers();
-  
-  if(userList === null){
-    res.send("NO Records");
-  }else{
-    res.send(userList);
-  }
-  
-  next();
-}
+
 
 async function getProfileDetails(req,res,next){
   const token = req.header('x-auth-token');
@@ -81,7 +70,7 @@ async function updateProfileDetails(req,res,next){
 module.exports = {
     
   register,
-  getUsers,
+ 
   getProfileDetails,
   updateProfileDetails
   

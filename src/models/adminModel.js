@@ -3,16 +3,15 @@ const { genSaltSync, hashSync, compareSync } = require('bcryptjs');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 
-const UserModel =  sequelize.define("user",
+const AdminModel =  sequelize.define("users",
 {
-    
-  username:{
-    type:DataTypes.STRING,
-    allowNull:false,
-    primaryKey:true,
-    unique: true
-    
-  },
+    username:{
+        type:DataTypes.STRING,
+        allowNull:false,
+        primaryKey:true,
+        unique: true
+        
+      },
     firstName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -37,19 +36,12 @@ const UserModel =  sequelize.define("user",
       },address: {
           type: DataTypes.STRING,
           allowNull: false,
-      },
-      registrationFee: {
-        type: DataTypes.ENUM('paid','notpaid'),
-        defaultValue: 'notpaid'
-    }
-         
-  
-      
+      }
     },
       {
         sequelize,
-        modelName:'User',
-        tableName:'user',
+        modelName:'Admin',
+        tableName:'admin',
         timestamps: false,
       },
     
@@ -58,7 +50,7 @@ const UserModel =  sequelize.define("user",
 );
 
 
-function validateUser(user) {
+function validateAdmin(user) {
   const schema = Joi.object({
     firstName: Joi.string().min(1).max(50).required(),
     lastName: Joi.string().min(1).max(50).required(),
@@ -98,9 +90,10 @@ function validateUpdateUser(user) {
 
 
 
+
 module.exports = {
-  validateUser,
-  UserModel,
+  validateAdmin,
+  AdminModel,
   
   validateUpdateUser
  }
