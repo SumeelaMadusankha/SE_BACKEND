@@ -1,5 +1,5 @@
-const { func } = require("joi");
-const {UserModel,validateUser,hashPassword} =require("../models/userModel");
+
+const {UserModel,hashPassword} =require("../models/userModel");
 
 
 async function register(req, res) {
@@ -15,7 +15,7 @@ async function register(req, res) {
            username=req.body.username,
            password=hashPassword(req.body.password),
            
-           role=req.body.role;
+           role="User";
 
 
 

@@ -73,12 +73,10 @@ function validateUser(user) {
     gender: Joi.string().valid('male','female').required(),
     birthday: Joi.date().raw().required(),
     address: Joi.string().min(1).max(50).required(),
-    weight: Joi.number().positive().greater(0).required(),
-    height: Joi.number().positive().greater(0).required(),
     username: Joi.string().min(6).required(),
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
-    role: Joi.string().valid('Admin', 'User').required()
+    
   });
 
 
