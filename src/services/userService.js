@@ -1,3 +1,4 @@
+const { func } = require("joi");
 const {UserModel,validateUser,hashPassword} =require("../models/userModel");
 
 
@@ -35,11 +36,32 @@ async function register(req, res) {
        return users;       }
   }
   
-
+async function updateUserProfile(req,res){
+     const  firstName = req.body.firstName,
+           lastName = req.body.lastName,
+           email= req.body.email,
+           mobileNo=req.body.mobileNo,
+           gender= req.body.gender,
+           birthday= req.body.birthday,
+           address= req.body.address;
+          try{
+            const result = await UserModel.update({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address},{
+              where: {
+                username: 'Sumeela'
+              }
+            });
+          }catch(error){
+            
+          }
+      
+           
+           
+}
 
 
 
   module.exports = {
    register,
-   fetchUsers
+   fetchUsers,
+   updateUserProfile
   }

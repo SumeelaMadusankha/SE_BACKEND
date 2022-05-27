@@ -1,5 +1,5 @@
 const user = require('../services/userService');
-const {validateUser, UserModel} = require("../models/userModel");
+const {validateUser,validateUpdateUser, UserModel} = require("../models/userModel");
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
@@ -43,7 +43,7 @@ async function getProfileDetails(req,res,next){
 
   try {
     const decoded = jwt.verify(token, jwtPrivateKey);
-  
+   
     const details = await UserModel.findOne({ where: { username: decoded['username'] } });
    
     if(details === null){
@@ -59,11 +59,24 @@ async function getProfileDetails(req,res,next){
   
   next();
 }
-
+async function updateProfileDetails(req,res,next){
+  const { error,value } = validateUpdateUser(req.body);
+  if (error) return res.status(400).send(error.details[0].message); 
+  try {
+    let  u = await user.updateUserProfile(req,res);
+    
+    next();
+      
+     } catch (err) {
+       console.error(`Error while updating user account details`, err.message);
+       next(err);
+     }
+}
 module.exports = {
     
   register,
   getUsers,
-  getProfileDetails
+  getProfileDetails,
+  updateProfileDetails
   
 };
