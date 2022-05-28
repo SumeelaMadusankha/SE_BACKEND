@@ -8,6 +8,12 @@ const auth=require("../middlewares/auth");
 const admin=require("../middlewares/admin");
 
 
+//accept user registration request
+router.get('/accept/:username',auth,admin, adminController.acceptRegistration);
+//declined user registration request
+router.get('/decline/:username',auth,admin, adminController.declineRegistration);
+//declined user registration request
+router.get('/remove/:username',auth,admin, adminController.declineAdmin);
 // get user lists
 router.get('/userslist',auth,admin, adminController.getUsers);
 
@@ -17,7 +23,6 @@ router.get('/adminslist',auth,admin, adminController.getAdmins);
 //add admin
 router.post('/addAdmin',auth,admin,adminController.addAdmin );
 
-//accept user registration request
-router.get('/:id',auth,admin, adminController.getAdmins);
+
 
 module.exports = router; 

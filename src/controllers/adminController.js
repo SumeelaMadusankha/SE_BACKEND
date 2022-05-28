@@ -55,12 +55,41 @@ async function addAdmin(req, res, next) {
     
     next();
   }
+  async function acceptRegistration(req,res,next){
+    
+      
+      req.username=req.params.username;
+      const user = await admin.acceptReg(req,res);
+      res.send(user);
+     
+    
+  }
+  async function declineRegistration(req,res,next){
+    
+      
+    req.username=req.params.username;
+    const user = await admin.declineReg(req,res);
+    res.send(user);
+   
   
+}
+async function declineAdmin(req,res,next){
+    
+      
+  req.username=req.params.username;
+  const user = await admin.declineAdmin(req,res);
+  res.send(user);
+ 
+
+}
   module.exports = {
     
     addAdmin,
     getUsers,
-    getAdmins
+    getAdmins,
+    acceptRegistration,
+    declineRegistration,
+    declineAdmin
 
     
   };

@@ -9,7 +9,8 @@ const sequelize = require("./src/configs/database");
 const {UserModel} = require("./src/models/userModel");
 const {AdminModel}= require("./src/models/adminModel");
 const {AuthModel} = require("./src/models/authModel");
-
+const {PaymentModel}=require('./src/models/paymentModel');
+UserModel.hasOne(PaymentModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
 UserModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
 AdminModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
 sequelize.sync({ alter: true });

@@ -1,10 +1,11 @@
 const {AdminModel} =require("../models/adminModel");
 const {AuthModel,hashPassword} =require("../models/authModel");
 const { QueryTypes } = require('sequelize');
-const  sequelize = require("../configs/database")
-
+const  sequelize = require("../configs/database");
+const { UserModel } = require("../models/userModel");
+const { PaymentModel } = require("../models/paymentModel");
 async function addAdmin(req, res) {
-    
+
     
     const  firstName = req.body.firstName,
            lastName = req.body.lastName,
@@ -50,7 +51,7 @@ async function addAdmin(req, res) {
   async function fetchUsers (req,res){
        
     const userlist= await sequelize.query(
-        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` ",
+        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` order by status desc",
         {
           
           type: QueryTypes.SELECT
@@ -65,9 +66,9 @@ async function addAdmin(req, res) {
 async function fetchAdmins (req,res){
     
     const adminlist= await sequelize.query(
-        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address FROM admin",
+        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address FROM `admin` where status= :status ",
         {
-         
+         replacements:{status: 'accepted'},
           type: QueryTypes.SELECT
         }
       );
@@ -78,8 +79,41 @@ async function fetchAdmins (req,res){
     
     return adminlist;       }
 }
+async function acceptReg(req,res){
+
+  const user = await UserModel.update({status:'accepted',registrationFee:'paid'},
+  {where:{
+    username: req.username
+  }});
+
+  return user;
+
+}
+async function declineReg(req,res){
+
+  const user = await UserModel.update({status:'declined'},
+  {where:{
+    username: req.username
+  }});
+
+  return user;
+
+}
+async function declineAdmin(req,res){
+
+  const user = await AdminModel.update({status:'declined'},
+  {where:{
+    username: req.username
+  }});
+
+  return user;
+
+}
   module.exports={
       addAdmin,
       fetchAdmins,
-      fetchUsers
+      fetchUsers,
+      acceptReg,
+      declineReg,
+      declineAdmin
   }

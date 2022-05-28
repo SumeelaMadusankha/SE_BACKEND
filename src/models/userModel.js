@@ -5,7 +5,7 @@ const Joi = require('joi');
 
 const UserModel =  sequelize.define("user",
 {
-    
+  
   username:{
     type:DataTypes.STRING,
     allowNull:false,

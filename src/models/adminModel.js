@@ -5,6 +5,7 @@ const Joi = require('joi');
 
 const AdminModel =  sequelize.define("users",
 {
+    
     username:{
         type:DataTypes.STRING,
         allowNull:false,
@@ -36,7 +37,13 @@ const AdminModel =  sequelize.define("users",
       },address: {
           type: DataTypes.STRING,
           allowNull: false,
+      },status: {
+        type: DataTypes.ENUM('declined','accepted'),
+        defaultValue: 'accepted'
+
+
       }
+
     },
       {
         sequelize,
