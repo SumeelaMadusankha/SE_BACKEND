@@ -17,6 +17,7 @@ router.get('/adminslist',auth,admin, adminController.getAdmins);
 //add admin
 router.post('/addAdmin',auth,admin,adminController.addAdmin );
 
-
+//accept user registration request
+router.get('/:id',auth,admin, adminController.getAdmins);
 
 module.exports = router; 

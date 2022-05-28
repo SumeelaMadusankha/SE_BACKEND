@@ -12,8 +12,9 @@ async function register(req, res, next) {
   if (usr) return res.status(400).send(usr);
   try {
    let  u = await user.register(req,res);
-    const token = jwt.sign({ username: u.username, role: u.role },jwtPrivateKey);
-    res.header('x-auth-token', token).send(u);
+   
+    // res.header('x-auth-token', token).send(u);
+    res.send(u);
     next();
      
     } catch (err) {

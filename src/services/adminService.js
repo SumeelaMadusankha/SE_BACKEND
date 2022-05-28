@@ -50,7 +50,7 @@ async function addAdmin(req, res) {
   async function fetchUsers (req,res){
        
     const userlist= await sequelize.query(
-        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address FROM `user` ",
+        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` ",
         {
           
           type: QueryTypes.SELECT

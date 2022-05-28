@@ -1,9 +1,8 @@
 const {DataTypes} = require('sequelize');
-const { genSaltSync, hashSync, compareSync } = require('bcryptjs');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 
-const UserModel =  sequelize.define("user",
+const UserModel =  sequelize.define("monthlyPayment",
 {
     
   username:{
@@ -13,43 +12,13 @@ const UserModel =  sequelize.define("user",
     unique: true
     
   },
-    firstName: {
+    description: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
-      lastName: {
-        type: DataTypes.STRING,
-      },
-      email: {
-        type: DataTypes.STRING,
-      },
-     
-      mobileNo: {
-        type: DataTypes.STRING,
-      },
-      gender: {
-          type: DataTypes.ENUM("male","female"),
-          allowNull: false,
-      },
-      birthday:{
-          type: DataTypes.DATE,
-          allowNull: false,
-      },address: {
-          type: DataTypes.STRING,
-          allowNull: false,
-      },
-      registrationFee: {
-        type: DataTypes.ENUM('paid','notpaid'),
-        defaultValue: 'notpaid'
-    },
-    registerFeeSlip: {
-      type: DataTypes.STRING,
-      allowNull:true
-  },
-  status: {
-    type: DataTypes.ENUM('pending','declined','accepted'),
-    defaultValue: 'pending'
-}
+      month: {
+        type: DataTypes.ENUM('January','February','March','April','May','June','July','Agust','September','October','November','December'),
+      }
          
   
       

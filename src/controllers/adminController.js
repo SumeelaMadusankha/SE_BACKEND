@@ -55,6 +55,7 @@ async function addAdmin(req, res, next) {
     
     next();
   }
+  
   module.exports = {
     
     addAdmin,

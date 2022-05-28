@@ -3,6 +3,8 @@ const {UserModel} =require("../models/userModel");
 const {AuthModel,hashPassword}= require("../models/authModel")
 const  sequelize = require("../configs/database")
 const { QueryTypes } = require('sequelize');
+const path =  require('path');
+const util = require('util');
 async function register(req, res) {
    
     
@@ -19,16 +21,35 @@ async function register(req, res) {
            role='User';
 
 
-
+           try{
+           
+            var file = req.files.registerFeeSlip;
+            var fileName = file.name;
+            
+            var size = file.data.length;
+           
+            var extension = path.extname(fileName);
+           
+            var allowedExtensions=/png|pdf|jpeg|jpg|gif/;
+            
+            if (!allowedExtensions.test(extension)) throw("Unsurpoted extension!");
+            var md5 = file.md5;
+            var URL ="/uploads/"+md5+extension;
+            
+             await util.promisify(file.mv)("./public"+URL);
+             
+            }catch(err){
+              res.status(500).json({
+                message:err
+              })
+            }
 
            const t = await sequelize.transaction();
 
            try {
-           
          
-           
-             const user = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username,registrationFee:registrationFee}, { transaction: t });
-           
+             const user = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username,registrationFee:registrationFee,registerFeeSlip:URL}, { transaction: t });
+         
              const auth =await AuthModel.create({
                username:username,
                password:password,
@@ -37,6 +58,9 @@ async function register(req, res) {
            
              
              await t.commit();
+
+
+
              return user;
            } catch (error) {
            
@@ -44,6 +68,7 @@ async function register(req, res) {
              await t.rollback();
            
            }
+           
 
    
    
