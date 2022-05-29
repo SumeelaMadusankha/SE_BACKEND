@@ -69,8 +69,26 @@ async function getPaymentList(){
   
     return payment;
   }
+  async function checkMonthlyFeePaid(req,res){
+    const user = await PaymentModel.findAll(
+    {where:{
+      username: req.user.username,
+      month:new Date().toLocaleString(
+        'default', {month: 'long'}
+      ),
+      year:new Date().getFullYear().toString()
+
+    }});
+    if (user===null) {
+        return null
+    }
+  
+    return user;
+  
+  }
 module.exports={
     payMonthlyFee,
     getPaymentList,
-    acceptPayment
+    acceptPayment,
+    checkMonthlyFeePaid
 }

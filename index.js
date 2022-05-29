@@ -5,6 +5,7 @@ bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload')
 const path =  require('path');
 const util = require('util');
+const cookieparser = require('cookie-parser');
 const sequelize = require("./src/configs/database");
 const {UserModel} = require("./src/models/userModel");
 const {AdminModel}= require("./src/models/adminModel");
@@ -35,6 +36,7 @@ app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());
 app.use(fileUpload());
+app.use(cookieparser());
 app.use(express.static("./public"));
 // use router
 app.use('/users', usersRouter);
