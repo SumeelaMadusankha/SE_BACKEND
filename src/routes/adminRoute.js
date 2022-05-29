@@ -24,5 +24,4 @@ router.get('/adminslist',auth,admin, adminController.getAdmins);
 router.post('/addAdmin',auth,admin,adminController.addAdmin );
 
 
-
 module.exports = router; 

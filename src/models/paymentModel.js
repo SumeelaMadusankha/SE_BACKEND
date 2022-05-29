@@ -4,20 +4,36 @@ const Joi = require('joi');
 
 const PaymentModel =  sequelize.define("monthlyPayment",
 {
-    
+    id:{
+        type:DataTypes.INTEGER,
+        autoIncrement:true,
+        primaryKey:true
+    },
   username:{
     type:DataTypes.STRING,
     allowNull:false,
-    primaryKey:true,
-    unique: true
     
+    
+  }, month: {
+    type: DataTypes.ENUM('January','February','March','April','May','June','July','Agust','September','October','November','December'),
+    
+  },
+  year:{
+    type:DataTypes.STRING,
+    allowNull:false
   },
     description: {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      month: {
-        type: DataTypes.ENUM('January','February','March','April','May','June','July','Agust','September','October','November','December'),
+     
+      slipPath:{
+        type: DataTypes.STRING,
+        allowNull:false
+      },
+      status:{
+          type:DataTypes.ENUM('pending','success'),
+          defaultValue: 'pending'
       }
          
   

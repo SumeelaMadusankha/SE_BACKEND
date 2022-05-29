@@ -1,15 +1,7 @@
 const admin = require('../services/adminService');
-  async function fetchUsers (req,res){
-       
-       const users = await UserModel.findAll();
-       if (users === null) {
-       return null;
-       } else {
-       console.log(users);
-       return users;       }
-  }
 const {AdminModel,validateAdmin} = require("../models/adminModel");
 const {AuthModel}=require('../models/authModel');
+const {PaymentModel}=require('../models/paymentModel');
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
@@ -82,8 +74,9 @@ async function declineAdmin(req,res,next){
  
 
 }
+
   module.exports = {
-    
+   
     addAdmin,
     getUsers,
     getAdmins,

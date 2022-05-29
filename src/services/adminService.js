@@ -3,7 +3,7 @@ const {AuthModel,hashPassword} =require("../models/authModel");
 const { QueryTypes } = require('sequelize');
 const  sequelize = require("../configs/database");
 const { UserModel } = require("../models/userModel");
-const { PaymentModel } = require("../models/paymentModel");
+
 async function addAdmin(req, res) {
 
     
@@ -109,11 +109,13 @@ async function declineAdmin(req,res){
   return user;
 
 }
+
   module.exports={
       addAdmin,
       fetchAdmins,
       fetchUsers,
       acceptReg,
       declineReg,
-      declineAdmin
+      declineAdmin,
+      
   }

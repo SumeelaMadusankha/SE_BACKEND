@@ -22,6 +22,7 @@ const req = require('express/lib/request');
 const usersRouter = require('./src/routes/userRoute');
 const authRouter = require('./src/routes/authRoute');
 const adminRouter = require("./src/routes/adminRoute");
+const paymentRouter = require("./src/routes/paymentRoute")
 const { default: helmet } = require('helmet');
 const compression = require('compression');
 app.get('/',(req,res) =>{
@@ -39,6 +40,7 @@ app.use(express.static("./public"));
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
+app.use('/payment', paymentRouter);
 app.post("/upload",async (req,res)=>{
   try{
   const file = req.files.xyz;
