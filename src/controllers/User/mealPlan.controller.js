@@ -30,19 +30,6 @@ async function addMealPlan(req, res, next) {
       next();
     }
 
-    async function getAllMealPlans(req,res,next){
-      
-      const mealPlans = await mealPlan.fetchAllMealPlans();
-      
-      if(mealPlans === null){
-        res.send("NO Meal Plan Records");
-      }else{
-        res.send(mealPlans);
-      }
-      
-      next();
-    }
-
 module.exports = {addMealPlan,
                   getMealPlanById,
-                  getAllMealPlans};
+                  };
