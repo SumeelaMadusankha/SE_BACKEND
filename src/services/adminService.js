@@ -6,9 +6,9 @@ const { UserModel } = require("../models/userModel");
 
 async function addAdmin(req, res) {
 
-    
-    const  firstName = req.body.firstName,
-           lastName = req.body.lastName,
+
+    const  Name = req.body.Name,
+          
            email= req.body.email,
            mobileNo=req.body.mobileNo,
            gender= req.body.gender,
@@ -20,14 +20,11 @@ async function addAdmin(req, res) {
            
 
 
-
+          
            const t = await sequelize.transaction();
 
            try {
-           
-         
-           
-             const admin = await AdminModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username}, { transaction: t });
+             const admin = await AdminModel.create({Name:Name,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username}, { transaction: t });
            
              const auth =await AuthModel.create({
                username:username,
@@ -51,9 +48,9 @@ async function addAdmin(req, res) {
   async function fetchUsers (req,res){
        
     const userlist= await sequelize.query(
-        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` order by status desc",
+        "SELECT Name,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` where status=:status order by status desc",
         {
-          
+          replacements:{status: 'accepted'},
           type: QueryTypes.SELECT
         }
       );
@@ -63,10 +60,27 @@ async function addAdmin(req, res) {
     
     return userlist;       }
 }
+async function fetchPendingUsersList (req,res){
+       
+  const userlist= await sequelize.query(
+      "SELECT Name,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` where status=:status order by status desc",
+      {
+        replacements:{status: 'pending'},
+        type: QueryTypes.SELECT
+      }
+    );
+  if (userlist === null) {
+  return null;
+  } else {
+  
+  return userlist;       }
+}
+
+
 async function fetchAdmins (req,res){
     
     const adminlist= await sequelize.query(
-        "SELECT firstName,lastName,email,mobileNo,gender,birthday,address FROM `admin` where status= :status ",
+        "SELECT Name,email,mobileNo,gender,birthday,address FROM `admin` where status= :status ",
         {
          replacements:{status: 'accepted'},
           type: QueryTypes.SELECT
@@ -117,5 +131,6 @@ async function declineAdmin(req,res){
       acceptReg,
       declineReg,
       declineAdmin,
+      fetchPendingUsersList
       
   }

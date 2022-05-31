@@ -38,6 +38,7 @@ app.use(bodyParser.json());
 app.use(fileUpload());
 app.use(cookieparser());
 app.use(express.static("./public"));
+app.use(bodyParser.urlencoded({ extended: false }))
 // use router
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);

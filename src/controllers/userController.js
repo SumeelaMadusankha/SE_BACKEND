@@ -3,18 +3,19 @@ const {validateUser,validateUpdateUser, UserModel} = require("../models/userMode
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
-
+const circularJSON = require('circular-json');
 async function register(req, res, next) {
+  //  res.status(400).send(req.body)
   const { error,value } = validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message); 
   
   let usr = await UserModel.findOne({ where: { username: req.body.username } });
-  if (usr) return res.status(400).send(usr);
+  if (usr) return res.status(400).send("Username has already been taken ");
   try {
    let  u = await user.register(req,res);
    
     // res.header('x-auth-token', token).send(u);
-    res.send(u);
+    res.send(u)
     next();
      
     } catch (err) {

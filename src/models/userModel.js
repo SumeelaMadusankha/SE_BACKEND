@@ -13,13 +13,11 @@ const UserModel =  sequelize.define("user",
     unique: true
     
   },
-    firstName: {
+    Name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
-        type: DataTypes.STRING,
-      },
+      
       email: {
         type: DataTypes.STRING,
       },
@@ -68,8 +66,7 @@ const UserModel =  sequelize.define("user",
 
 function validateUser(user) {
   const schema = Joi.object({
-    firstName: Joi.string().min(1).max(50).required(),
-    lastName: Joi.string().min(1).max(50).required(),
+    Name: Joi.string().min(1).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
     mobileNo:Joi.string().length(10).pattern(/^[0-9]+$/).required(),
     gender: Joi.string().valid('male','female').required(),
@@ -78,6 +75,7 @@ function validateUser(user) {
     username: Joi.string().min(6).required(),
     password: Joi.string().min(6).required(),
     confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+    // registerFeeSlip:Joi.required()
     
   });
 

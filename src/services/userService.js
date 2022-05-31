@@ -5,11 +5,11 @@ const  sequelize = require("../configs/database")
 const { QueryTypes } = require('sequelize');
 const path =  require('path');
 const util = require('util');
+const { json } = require("body-parser");
 async function register(req, res) {
-   
+const circularJSON = require('circular-json');
     
-    const  firstName = req.body.firstName,
-           lastName = req.body.lastName,
+    const  Name = req.body.Name,
            email= req.body.email,
            mobileNo=req.body.mobileNo,
            gender= req.body.gender,
@@ -19,10 +19,12 @@ async function register(req, res) {
            password=hashPassword(req.body.password),
            registrationFee='notPaid';
            role='User';
+           
 
 
            try{
            
+            
             var file = req.files.registerFeeSlip;
             var fileName = file.name;
             
@@ -35,20 +37,18 @@ async function register(req, res) {
             if (!allowedExtensions.test(extension)) throw("Unsurpoted extension!");
             var md5 = file.md5;
             var URL ="/uploads/"+md5+extension;
-            
+          var s ="dbdbdb"
              await util.promisify(file.mv)("./public"+URL);
              
             }catch(err){
-              res.status(500).json({
-                message:err
-              })
+             return  res.status(500).send(file)
             }
 
            const t = await sequelize.transaction();
 
            try {
          
-             const user = await UserModel.create({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username,registrationFee:registrationFee,registerFeeSlip:URL}, { transaction: t });
+             const user = await UserModel.create({Name:Name,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address,username:username,registrationFee:registrationFee,registerFeeSlip:URL}, { transaction: t });
          
              const auth =await AuthModel.create({
                username:username,
@@ -64,8 +64,11 @@ async function register(req, res) {
              return user;
            } catch (error) {
            
-           
+            
              await t.rollback();
+             return  res.status(400).json({
+              message:error
+            })
            
            }
            

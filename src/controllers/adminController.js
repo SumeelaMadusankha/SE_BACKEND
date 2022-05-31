@@ -6,14 +6,27 @@ const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
 const _ = require('lodash');
 
+// const calculateAge = (birthday) => {
+//   const ageDifMs = Date.now() - new Date(birthday).getTime();
+//   const ageDate = new Date(ageDifMs);
+//   return Math.abs(ageDate.getUTCFullYear() - 1970);
+// }
+
+
 async function addAdmin(req, res, next) {
-  const { error,value } = validateAdmin(req.body);
-  if (error) return res.status(400).send(error.details[0].message); 
   
+  const { error,value } = validateAdmin(req.body);
+
+  if (error) return res.status(400).send(error.details[0].message); 
+ 
   let usr = await AuthModel.findOne({ where: { username: req.body.username } });
-  if (usr) return res.status(400).send(usr);
+ 
+  if (usr) return res.status(400).send("This username has already been taken");
+  
   try {
+   
    let  u = await admin.addAdmin(req,res);
+   
    res.send(u);
     next();
      
@@ -30,6 +43,23 @@ async function addAdmin(req, res, next) {
     if(userList === null){
       res.send("NO Records");
     }else{
+      
+     
+      res.send(userList);
+    }
+    
+    next();
+  }
+  
+  async function getPendingUserList(req,res,next){
+  
+    const userList = await admin.fetchPendingUsersList();
+    
+    if(userList === null){
+      res.send("NO Records");
+    }else{
+      
+     
       res.send(userList);
     }
     
@@ -82,7 +112,8 @@ async function declineAdmin(req,res,next){
     getAdmins,
     acceptRegistration,
     declineRegistration,
-    declineAdmin
+    declineAdmin,
+    getPendingUserList
 
     
   };

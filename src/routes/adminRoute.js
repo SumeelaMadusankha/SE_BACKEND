@@ -23,5 +23,5 @@ router.get('/adminslist',auth,admin, adminController.getAdmins);
 //add admin
 router.post('/addAdmin',auth,admin,adminController.addAdmin );
 
-
+router.get('/pendingUserList',auth,admin, adminController.getPendingUserList);
 module.exports = router; 
