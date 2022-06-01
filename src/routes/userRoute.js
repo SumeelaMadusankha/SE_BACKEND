@@ -4,7 +4,8 @@ const express = require('express'),
 
   const auth=require("../middlewares/auth");
   const admin=require("../middlewares/admin");
-
+  const payment=require("../middlewares/monthlyFee");
+  const accept=require("../middlewares/adminAccepted");
 // create new user
 router.post('/register',userController.register);
 //get profile details

@@ -1,11 +1,13 @@
 
 const {UserModel} =require("../models/userModel");
+const {AdminModel} =require("../models/adminModel");
 const {AuthModel,hashPassword}= require("../models/authModel")
 const  sequelize = require("../configs/database")
 const { QueryTypes } = require('sequelize');
 const path =  require('path');
 const util = require('util');
 const { json } = require("body-parser");
+const { isEmpty } = require("lodash");
 async function register(req, res) {
 const circularJSON = require('circular-json');
     
@@ -117,10 +119,31 @@ async function updateUserProfile(req,res){
            
 }
 
-
+async function checkAdminAccept(req,res){
+  const user1 = await AdminModel.findAll(
+    {where:{
+      username: req.body.username,
+      status: 'accepted'
+     
+    }});
+    if (isEmpty(user1)) {
+      const user2 = await UserModel.findAll(
+        {where:{
+          username: req.body.username,
+          status: 'accepted'
+         
+        }});
+        if (isEmpty(user2)) {
+           return null;
+        }
+        return user2;
+    }
+  
+    return user1;
+}
 
   module.exports = {
    register,
-  
+   checkAdminAccept,
    updateUserProfile
   }
