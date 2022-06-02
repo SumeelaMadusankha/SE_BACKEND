@@ -44,7 +44,7 @@ async function getPaymentList(){
     );
     const year =  new Date().getFullYear().toString();
     const paymentList= await sequelize.query(
-      "SELECT firstName,lastName,email,mobileNo,slipPath,month FROM monthlypayment left outer join user on monthlypayment.username=user.username  where month= :month and year=:year",
+      "SELECT Name,email,mobileNo,slipPath,month FROM monthlypayment left outer join user on monthlypayment.username=user.username  where month= :month and year=:year",
       {
        replacements:{status: 'accepted',
                      month:month,
