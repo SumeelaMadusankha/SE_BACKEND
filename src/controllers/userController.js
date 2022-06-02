@@ -72,7 +72,6 @@ async function updateProfileDetails(req,res,next){
 module.exports = {
     
   register,
- 
   getProfileDetails,
   updateProfileDetails
   
