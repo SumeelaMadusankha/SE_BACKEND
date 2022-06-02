@@ -26,7 +26,7 @@ async function getPaymentList(req,res,next){
     if(paymentList === null){
       res.send("NO Records");
     }else{
-      res.send(paymentList);
+     return  res.send(paymentList);
     }
     
     next();
