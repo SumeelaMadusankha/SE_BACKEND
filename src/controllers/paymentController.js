@@ -37,7 +37,7 @@ async function getPaymentList(req,res,next){
         const p = await payment.acceptPayment(req,res);
         res.send(p);
     }catch(err){
-        res.send("payment acceptment process failed")
+       return  res.send("payment acceptment process failed")
     }
   next()
   }
