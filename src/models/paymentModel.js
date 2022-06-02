@@ -31,7 +31,7 @@ const PaymentModel =  sequelize.define("monthlyPayment",
         type: DataTypes.STRING,
         allowNull:false
       },
-      status:{
+      paymentStatus:{
           type:DataTypes.ENUM('pending','success'),
           defaultValue: 'pending'
       }
