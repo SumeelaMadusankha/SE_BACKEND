@@ -23,7 +23,12 @@ const req = require('express/lib/request');
 const usersRouter = require('./src/routes/userRoute');
 const authRouter = require('./src/routes/authRoute');
 const adminRouter = require("./src/routes/adminRoute");
-const paymentRouter = require("./src/routes/paymentRoute")
+const paymentRouter = require("./src/routes/paymentRoute");
+const mealplanRoute = require("./src/routes/mealplanRoute");
+const workoutplanRoute = require("./src/routes/workoutRoute");
+const admin_mealplanRoute = require("./src/routes/admin_mealplanRoute");
+const admin_uploadMealplanRoute = require("./src/routes/admin_uploadMealplanRoute");
+const admin_uploadWorkplanRoute = require("./src/routes/admin_uploadWorkplanRoute");
 const { default: helmet } = require('helmet');
 const compression = require('compression');
 app.get('/',(req,res) =>{
@@ -44,6 +49,11 @@ app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/admin', adminRouter);
 app.use('/payment', paymentRouter);
+app.use('/mealplan', mealplanRoute);
+app.use('/workoutplan', workoutplanRoute);
+app.use('/a_mealplan', admin_mealplanRoute);
+app.use('/a_uploadMealplan', admin_uploadMealplanRoute);
+app.use('/a_uploadWorkplan', admin_uploadWorkplanRoute);
 app.post("/upload",async (req,res)=>{
   try{
   const file = req.files.xyz;
