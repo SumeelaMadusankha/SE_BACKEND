@@ -66,8 +66,20 @@ async function addAdmin(req, res, next) {
     next();
   }
   async function getAdmins(req,res,next){
+    const token = req.header('x-auth-token');
+    if (!token) return res.status(401).send('Access denied. No token provided.');
   
-    const adminList = await admin.fetchAdmins();
+    try {
+      var decoded = jwt.verify(token, jwtPrivateKey);
+     
+      
+     
+     
+    }
+    catch (ex) {
+      res.status(400).send('Invalid token.');
+    }
+    const adminList = await admin.fetchAdmins(decoded['username']);
     
     if(adminList === null){
       res.send("NO Records");
@@ -75,12 +87,14 @@ async function addAdmin(req, res, next) {
       res.send(adminList);
     }
     
+    
     next();
   }
   async function acceptRegistration(req,res,next){
     
       
       req.username=req.params.username;
+      // return res.send(req.username)
       const user = await admin.acceptReg(req,res);
       res.send(user);
      
@@ -90,6 +104,7 @@ async function addAdmin(req, res, next) {
     
       
     req.username=req.params.username;
+    // return res.send(req.username)
     const user = await admin.declineReg(req,res);
     res.send(user);
    

@@ -41,8 +41,19 @@ async function getPaymentList(req,res,next){
     }
   next()
   }
+  async function declinePayment(req,res,next){
+    try{
+      req.id=req.params.id;
+      const p = await payment.declinePayment(req,res);
+      res.send(p);
+  }catch(err){
+      return res.send("payment decline process failed")
+  }
+next()
+}
 module.exports={
     monthlyPayment,
     getPaymentList,
-    acceptPayment
+    acceptPayment,
+    declinePayment
 }

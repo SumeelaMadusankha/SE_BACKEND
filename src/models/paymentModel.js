@@ -32,7 +32,7 @@ const PaymentModel =  sequelize.define("monthlyPayment",
         allowNull:false
       },
       paymentStatus:{
-          type:DataTypes.ENUM('pending','success'),
+          type:DataTypes.ENUM('pending','success','declined'),
           defaultValue: 'pending'
       }
          

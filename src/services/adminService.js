@@ -48,7 +48,7 @@ async function addAdmin(req, res) {
   async function fetchUsers (req,res){
        
     const userlist= await sequelize.query(
-        "SELECT Name,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` where status=:status order by status desc",
+        "SELECT Name,username,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` where status=:status order by status desc",
         {
           replacements:{status: 'accepted'},
           type: QueryTypes.SELECT
@@ -63,7 +63,7 @@ async function addAdmin(req, res) {
 async function fetchPendingUsersList (req,res){
        
   const userlist= await sequelize.query(
-      "SELECT Name,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip FROM `user` where status=:status order by status desc",
+      "SELECT Name,email,mobileNo,gender,birthday,address,registrationFee,registerFeeSlip,username FROM `user` where status=:status order by status desc",
       {
         replacements:{status: 'pending'},
         type: QueryTypes.SELECT
@@ -77,12 +77,12 @@ async function fetchPendingUsersList (req,res){
 }
 
 
-async function fetchAdmins (req,res){
+async function fetchAdmins (req){
     
     const adminlist= await sequelize.query(
-        "SELECT Name,email,mobileNo,gender,birthday,address FROM `admin` where status= :status ",
+        "SELECT Name,username,email,mobileNo,gender,birthday,address FROM `admin` where status= :status and username!=:username ",
         {
-         replacements:{status: 'accepted'},
+         replacements:{status: 'accepted',username:req},
           type: QueryTypes.SELECT
         }
       );
@@ -94,21 +94,26 @@ async function fetchAdmins (req,res){
     return adminlist;       }
 }
 async function acceptReg(req,res){
-
-  const user = await UserModel.update({status:'accepted',registrationFee:'paid'},
-  {where:{
-    username: req.username
-  }});
+// return res.send(req.username)
+  const user = await UserModel.update({status:'accepted',	registrationFee:'paid'},{
+    where: {
+      username: req.username
+    }
+  });
 
   return user;
 
 }
 async function declineReg(req,res){
 
-  const user = await UserModel.update({status:'declined'},
-  {where:{
-    username: req.username
-  }});
+  const user = await sequelize.query(
+    "update user set status=:status,registrationFee=:fee where username=:username ",
+    {
+     replacements:{status: 'declined',fee:"notpaid",username:req.username},
+      type: QueryTypes.UPDATE
+    }
+  );
+
 
   return user;
 

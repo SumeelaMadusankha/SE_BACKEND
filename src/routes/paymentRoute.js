@@ -13,7 +13,7 @@ router.post('/',auth,paymentController.monthlyPayment );
 router.get('/paymentList',auth,admin,paymentController.getPaymentList)
 //accept payment
 router.get('/:id',auth,admin,paymentController.acceptPayment)
-
+router.get('/decline/:id',auth,admin,paymentController.declinePayment)
 
 
 module.exports = router; 

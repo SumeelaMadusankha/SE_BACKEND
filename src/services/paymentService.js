@@ -61,8 +61,17 @@ async function getPaymentList(){
   }
 
   async function acceptPayment(req,res){
+   
+    const payment = await PaymentModel.update({paymentStatus:'success'},
+    {where:{
+      id: req.id
+    }});
   
-    const payment = await PaymentModel.update({status:'success'},
+    return payment;
+  }
+  async function declinePayment(req,res){
+   
+    const payment = await PaymentModel.update({paymentStatus:'declined'},
     {where:{
       id: req.id
     }});
@@ -91,5 +100,6 @@ module.exports={
     payMonthlyFee,
     getPaymentList,
     acceptPayment,
-    checkMonthlyFeePaid
+    checkMonthlyFeePaid,
+    declinePayment
 }
