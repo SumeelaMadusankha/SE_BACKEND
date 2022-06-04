@@ -1,5 +1,5 @@
-const mealPlan = require('../../services/mealPlanService');
-const {mealModel} = require("../../models");
+const mealPlan = require('../services/mealplanService');
+const {mealModel} = require("../models/mealPlanModel");
 const { add } = require('nodemon/lib/rules');
 
 
