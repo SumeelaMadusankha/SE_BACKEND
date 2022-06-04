@@ -43,7 +43,7 @@ const circularJSON = require('circular-json');
              await util.promisify(file.mv)("./public"+URL);
              
             }catch(err){
-             return  res.status(400).send(extension+"not allowed")
+             return  res.status(400).send(extension+" not allowed");
             }
 
            const t = await sequelize.transaction();
