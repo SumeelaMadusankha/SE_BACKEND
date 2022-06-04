@@ -39,11 +39,11 @@ const circularJSON = require('circular-json');
             if (!allowedExtensions.test(extension)) throw("Unsurpoted extension!");
             var md5 = file.md5;
             var URL ="/uploads/"+md5+extension;
-          var s ="dbdbdb"
+             var s ="dbdbdb";
              await util.promisify(file.mv)("./public"+URL);
              
             }catch(err){
-             return  res.status(500).send(file)
+             return  res.status(400).send(extension+"not allowed")
             }
 
            const t = await sequelize.transaction();
