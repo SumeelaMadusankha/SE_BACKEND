@@ -12,8 +12,6 @@ const PaymentModel =  sequelize.define("monthlyPayment",
   username:{
     type:DataTypes.STRING,
     allowNull:false,
-    
-    
   }, month: {
     type: DataTypes.ENUM('January','February','March','April','May','June','July','Agust','September','October','November','December'),
     

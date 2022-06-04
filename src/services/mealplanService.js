@@ -1,12 +1,14 @@
 const {MealModel} =require("../models/mealPlanModel");
 
 async function addMealPlan(req, res) {
-    const  mealType= req.body.mealType,
+  
+    const  target_time= req.body.target_time,
            note= req.body.note,
-           weight= req.body.weight,
-           height= req.body.height;
+           current_weight= req.body.current_weight,
+           target_weight= req.body.target_weight,
+           veg_prefer=req.body.veg_prefer;
 
-    const result = await MealModel.create({note:note,mealType:mealType,weight:weight,height:height});
+    const result = await MealModel.create({note:note,veg_prefer:veg_prefer,current_weight:current_weight,target_weight:target_weight,target_time,target_time,username:req.username,req_date:new Date()});
     return result;
    
 }
@@ -35,4 +37,14 @@ async function fetchMealPlan (userId){
       return plans;       }
  }
 
-module.exports = {addMealPlan,fetchMealPlan,fetchAllMealPlans};
+ async function fetchSpecificMealPlan (req,res){
+       
+  const plans = await MealModel.findAll({where:{username:req.username}});
+  //   const users = await UserModel.findAll();
+    if (plans === null) {
+    return null;
+    } else {
+    
+    return plans;       }
+}
+module.exports = {addMealPlan,fetchMealPlan,fetchAllMealPlans,fetchSpecificMealPlan};

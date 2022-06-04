@@ -1,9 +1,20 @@
 const mealPlan = require('../services/mealplanService');
 const mealModel = require("../models/mealPlanModel");
 const { add } = require('nodemon/lib/rules');
-
+const {jwtPrivateKey} = require('../configs/config');
+const jwt = require('jsonwebtoken');
 async function addMealPlan(req, res, next) {
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
 
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+ 
+    req.username=decoded['username'] 
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
   
     const { error,value } = mealModel.validateMealPlan(req.body);
     
@@ -14,7 +25,7 @@ async function addMealPlan(req, res, next) {
         console.error(`Error while creating programming language`, err.message);
         next(err);
       }
-    }
+}
 
 
     async function getMealPlanById(req,res,next){
@@ -29,7 +40,30 @@ async function addMealPlan(req, res, next) {
       
       next();
     }
+    async function getSpecificMealPlans(req,res,next){
+      const token = req.header('x-auth-token');
+      if (!token) return res.status(401).send('Access denied. No token provided.');
+    
+      try {
+        var decoded = jwt.verify(token, jwtPrivateKey);
+     
+        req.username=decoded['username'] 
+      }
+      catch (ex) {
+        res.status(400).send('Invalid token.');
+      }
+      const mealPaln = await mealPlan.fetchSpecificMealPlan(req,res);
+      
+      if(mealPaln === null){
+        res.send("NO Records with userId: "+userId);
+      }else{
+        res.send(mealPaln);
+      }
+      
+      next();
+    }
 
 module.exports = {addMealPlan,
                   getMealPlanById,
+                  getSpecificMealPlans
                   };

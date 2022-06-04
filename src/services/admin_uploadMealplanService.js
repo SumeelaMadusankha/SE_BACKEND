@@ -1,14 +1,14 @@
 const req = require('express/lib/request');
 
 const  sequelize = require("../configs/database");
-const  {uploadMealPlanModel}  = require("../models/admin_uploadMealplanModel");
+const  {MealModel}  = require("../models/mealPlanModel");
 const path =  require('path');
 const { QueryTypes } = require('sequelize');
 const util = require('util');
 
 async function uploadmealplan(req,res){
     const 
-          description = req.body.description,
+          
           
           file =req.files.slip;
           
@@ -29,11 +29,14 @@ async function uploadmealplan(req,res){
              await util.promisify(file.mv)("./public"+URL);
 
             }catch(err){
-              res.status(500).json({
-                message:err
-              })
+              res.status(400).send(extension+'is not allowed'
+              );
             }
-            const mealplan = await uploadMealPlanModel.create({slipPath:URL,description:description});
+            const mealplan = await MealModel.update({status:'uploaded',	mealPlan:URL},{
+              where: {
+                req: req.body.id
+              }
+            });
              return mealplan;
 
         

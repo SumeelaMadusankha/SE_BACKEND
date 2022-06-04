@@ -11,22 +11,42 @@ const MealModel =  sequelize.define("mealPlan",
         autoIncrement:true,
         primaryKey:true
     },
-    height: {
+    req_date:{
+        type:DataTypes.DATE
+    },
+    username:{
+        type:DataTypes.STRING,
+        allowNull:false,
+      },
+      current_weight: {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    weight: {
+    target_weight: {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    mealType: {
+    target_time: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    veg_prefer: {
         type: DataTypes.ENUM("veg","non-veg"),
         allowNull: false,
     },
     note: {
-        type: DataTypes.TEXT,
+        type: DataTypes.STRING,
         allowNull: true,
-    }
+    },
+    status:{
+        type:DataTypes.ENUM('pending','uploaded'),
+        defaultValue: 'pending'
+        
+        },
+        mealPlan:{
+            type: DataTypes.STRING,
+            
+            }
 },
 {
         sequelize,
@@ -39,10 +59,11 @@ const MealModel =  sequelize.define("mealPlan",
 function validateMealPlan(mealPlan) {
     
   const schema = Joi.object({
-    weight: Joi.number().positive().greater(0).required(),
-    height: Joi.number().positive().greater(0).required(),
-    mealType: Joi.string().valid('veg','nonVeg').required(),
-    note: Joi.string()
+    current_weight: Joi.number().positive().greater(0).required(),
+    target_weight: Joi.number().positive().greater(0).required(),
+    veg_prefer: Joi.string().valid('veg','non-veg').required(),
+    note: Joi.string(),
+    target_time:Joi.number().positive().greater(0).required(),
   });
 
   return schema.validate(mealPlan)

@@ -1,14 +1,14 @@
 const req = require('express/lib/request');
 
 const  sequelize = require("../configs/database");
-const  {uploadWorkoutPlanModel}  = require("../models/admin_uplodWorkplanModel");
+const  {workoutplanModel}  = require("../models/workoutPlanModel");
 const path =  require('path');
 const { QueryTypes } = require('sequelize');
 const util = require('util');
 
 async function uploadworkoutplan(req,res){
     const 
-          description = req.body.description,
+         
           
           file =req.files.slip;
           
@@ -33,7 +33,11 @@ async function uploadworkoutplan(req,res){
                 message:err
               })
             }
-            const workoutplan = await uploadWorkoutPlanModel.create({slipPath:URL,description:description});
+            const workoutplan = await workoutplanModel.update({status:'uploaded',	workoutPlan:URL},{
+              where: {
+                req: req.body.id
+              }
+            });
              return mealplan;
 
         

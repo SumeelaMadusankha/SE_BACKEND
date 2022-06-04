@@ -2,7 +2,7 @@ const {DataTypes} = require('sequelize');
 
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
-const workoutplanModel =  sequelize.define("mealPlan",
+const workoutplanModel =  sequelize.define("workOutPlan",
 {
     id:{
         type:DataTypes.INTEGER,
@@ -10,30 +10,47 @@ const workoutplanModel =  sequelize.define("mealPlan",
         autoIncrement:true,
         primaryKey:true
     },
-    Cur_Weight: {
+    date:{
+        type:DataTypes.DATE
+    },
+    username:{
+        type:DataTypes.STRING,
+        allowNull:false,
+      },
+      current_weight: {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    Tar_Weight: {
+    target_weight: {
         type: DataTypes.DOUBLE,
         allowNull: false,
     },
-    Tar_days: {
+    target_time: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    PractiseDaysPerWeek: {
-        type: DataTypes.INTEGER,
+    
+    workout_frequency:{
+        type: DataTypes.ENUM("Once aweek or never","Twice aweek","Three times week or more"),
         allowNull: false,
     },
-    targetPart: {
-        type: DataTypes.ENUM("legs","arms","belly"),
+    targets: {
+        type: DataTypes.ENUM("Build muscle","Lose weight","Get fit","Feel like an athlete"),
         allowNull: false,
     },
     note: {
         type: DataTypes.TEXT,
         
-    }
+    },
+    status:{
+    type:DataTypes.ENUM('pending','uploaded'),
+    defaultValue: 'pending'
+    
+    },
+    workoutPlan:{
+        type: DataTypes.STRING,
+        
+        }
 },
 {
         sequelize,
@@ -46,11 +63,11 @@ const workoutplanModel =  sequelize.define("mealPlan",
 function validateWorkOutPlan(workoutplanModel) {
     
   const schema = Joi.object({
-    Cur_Weight: Joi.number().positive().greater(0).required(),
-    Tar_Weight: Joi.number().positive().greater(0).required(),
-    Tar_days: Joi.number().positive().greater(0).required(),
-    PractiseDaysPerWeek: Joi.number().positive().greater(0).required(),
-    targetPart: Joi.string().valid('legs','arms','belly').required(),
+    current_weight: Joi.number().positive().greater(0).required(),
+    target_weight: Joi.number().positive().greater(0).required(),
+    target_time: Joi.number().positive().greater(0).required(),
+    workout_frequency: Joi.string().valid('Once a week or never','Twice a week','Three times a week or more'),
+    targets: Joi.string().valid('Build muscle','Lose Weight','Get fit','Feel like an athlete').required(),
     note:Joi.string()
   });
 

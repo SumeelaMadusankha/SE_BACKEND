@@ -1,14 +1,16 @@
 const {workoutplanModel} =require("../models/workoutPlanModel");
 
 async function addWorkoutPlan(req, res) {
-    const  targetPart= req.body.targetPart,
+    const  
            note= req.body.note,
-           Cur_Weight= req.body.Cur_Weight,
-           Tar_Weight= req.body.Tar_Weight;
-           Tar_days= req.body.Tar_days;
-           PractiseDaysPerWeek= req.body.PractiseDaysPerWeek;
+           current_weight= req.body.current_weight,
+           target_weight= req.body.target_weight,
+           target_time= req.body.target_time,
+           targets=req.body.targets,
+           workout_frequency=req.body.workout_frequency;
+           
 
-    const result = await workoutplanModel.create({note:note,targetPart:targetPart,Cur_Weight:Cur_Weight,Tar_Weight:Tar_Weight,Tar_days:Tar_days,PractiseDaysPerWeek:PractiseDaysPerWeek});
+    const result = await workoutplanModel.create({note:note,current_weight:current_weight,target_weight:target_weight,targets:targets,target_time:target_time,workout_frequency:workout_frequency,date: new Date(),username:req.username});
     return result;
    
 }
@@ -35,5 +37,14 @@ async function fetchWorkoutPlan (userId){
       
       return plans;       }
  }
-
-module.exports = {addWorkoutPlan,fetchWorkoutPlan,fetchAllWorkoutPlans};
+ async function fetchSpecificWorkPlan (req,res){
+       
+  const plans = await workoutplanModel.findAll({where:{username:req.username}});
+  //   const users = await UserModel.findAll();
+    if (plans === null) {
+    return null;
+    } else {
+    
+    return plans;       }
+}
+module.exports = {addWorkoutPlan,fetchWorkoutPlan,fetchAllWorkoutPlans,fetchSpecificWorkPlan};
