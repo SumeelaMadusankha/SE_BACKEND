@@ -2,9 +2,11 @@ const user = require('../services/userService');
 const {validateUser, UserModel} = require("../models/userModel")
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
+const {userModel} = require("../models")
+
 
 async function register(req, res, next) {
-  const { error,value } = validateUser(req.body);
+  const { error,value } = userModel.validateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message); 
   
   let usr = await UserModel.findOne({ where: { username: req.body.username } });
