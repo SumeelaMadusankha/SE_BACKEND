@@ -26,6 +26,8 @@ const req = require('express/lib/request');
 // routers
 const usersRouter = require('./src/routes/userRoute');
 const authRouter = require('./src/routes/authRoute');
+const loginRouter = require('./src/routes/login.route');
+
 const adminRouter = require("./src/routes/adminRoute");
 const paymentRouter = require("./src/routes/paymentRoute");
 const mealplanRoute = require("./src/routes/mealplanRoute");
@@ -51,6 +53,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // use router
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+<<<<<<< HEAD
+app.use('/app',loginRouter);
+=======
 app.use('/admin', adminRouter);
 app.use('/payment', paymentRouter);
 app.use('/mealplan', mealplanRoute);
@@ -81,6 +86,7 @@ app.post("/upload",async (req,res)=>{
   }
 
 })
+>>>>>>> 22bdcf118b51790ee69878f9d4f7af572fe25ae9
 // starting the server
 const port =  process.env.PORT || 5000;
 app.listen( port , () => console.log(`Server started, listening port: ${port}`));

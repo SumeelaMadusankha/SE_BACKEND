@@ -2,6 +2,11 @@ const user = require('../services/userService');
 const {validateUser,validateUpdateUser, UserModel} = require("../models/userModel");
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
+const {userModel} = require("../models")
+
+
+async function register(req, res, next) {
+  const { error,value } = userModel.validateUser(req.body);
 const _ = require('lodash');
 const circularJSON = require('circular-json');
 async function register(req, res, next) {
