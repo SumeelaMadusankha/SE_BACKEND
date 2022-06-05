@@ -3,7 +3,7 @@ const {DataTypes} = require('sequelize');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 const joiObjectid = require('joi-objectid');
-const MealModel =  sequelize.define("mealPlan",
+const MealModel =  sequelize.define("mealplan",
 {
     id:{
         type:DataTypes.INTEGER,
@@ -50,8 +50,8 @@ const MealModel =  sequelize.define("mealPlan",
 },
 {
         sequelize,
-        modelName:'MealPlan',
-        tableName:'mealPlan',
+        modelName:'Mealplan',
+        tableName:'mealplan',
         timestamps: false,
 },
 );

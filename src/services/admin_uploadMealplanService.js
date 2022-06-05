@@ -8,7 +8,7 @@ const util = require('util');
 
 async function uploadmealplan(req,res){
     const 
-          file =req.files.slip;
+          file =req.files.file_;
           
           try{
             var fileName = file.name;
@@ -27,12 +27,12 @@ async function uploadmealplan(req,res){
              await util.promisify(file.mv)("./public"+URL);
 
             }catch(err){
-              res.status(400).send(extension+'is not allowed'
+              return res.status(400).send(extension+'is not allowed'
               );
             }
             const mealplan = await MealModel.update({status:'uploaded',	mealPlan:URL},{
               where: {
-                req: req.body.id
+                id: req.body.id_
               }
             });
              return mealplan;

@@ -1,5 +1,6 @@
 const {workoutplanModel} =require("../models/workoutPlanModel");
-
+const { QueryTypes } = require('sequelize');
+const  sequelize = require("../configs/database");
 async function addWorkoutPlan(req, res) {
     const  
            note= req.body.note,
@@ -27,9 +28,15 @@ async function fetchWorkoutPlan (userId){
     }
  }
 
- async function fetchAllWorkoutPlans (req,res){
+ async function fetchAllworkPlans (req,res){
        
-    const plans = await WorkoutPlanModel.workoutplanModel.findAll();
+  const plans= await sequelize.query(
+    "SELECT id,Name,note,workoutPlan,current_weight,target_weight,workout_frequency,target_time,date,email,mobileNo,workoutplan.status,targets FROM workoutplan left outer join user on workoutplan.username=user.username",
+    {
+    
+      type: QueryTypes.SELECT
+    }
+  );
     //   const users = await UserModel.findAll();
       if (plans === null) {
       return null;
@@ -47,4 +54,4 @@ async function fetchWorkoutPlan (userId){
     
     return plans;       }
 }
-module.exports = {addWorkoutPlan,fetchWorkoutPlan,fetchAllWorkoutPlans,fetchSpecificWorkPlan};
+module.exports = {addWorkoutPlan,fetchWorkoutPlan,fetchSpecificWorkPlan,fetchAllworkPlans};

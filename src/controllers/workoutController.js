@@ -66,6 +66,18 @@ async function addWorkoutPlan(req, res, next) {
       
       next();
     }
+    async function getAllWorkoutPlans(req,res,next){
+      
+      const mealPlans = await workoutPlan.fetchAllworkPlans();
+      
+      if(mealPlans === null){
+        res.send("NO Meal Plan Records");
+      }else{
+        res.send(mealPlans);
+      }
+      
+      next();
+    }
 
 module.exports = {addWorkoutPlan,
-    getWorkoutPlanById,getSpecificWorkOutPlans};
+    getWorkoutPlanById,getSpecificWorkOutPlans,getAllWorkoutPlans};

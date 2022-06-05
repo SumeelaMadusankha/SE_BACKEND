@@ -10,7 +10,7 @@ async function uploadworkoutplan(req,res){
     const 
          
           
-          file =req.files.slip;
+          file =req.files.file_;
           
           try{
             var fileName = file.name;
@@ -35,10 +35,10 @@ async function uploadworkoutplan(req,res){
             }
             const workoutplan = await workoutplanModel.update({status:'uploaded',	workoutPlan:URL},{
               where: {
-                req: req.body.id
+                id: req.body.id_
               }
             });
-             return mealplan;
+             return workoutplan;
 
         
 }

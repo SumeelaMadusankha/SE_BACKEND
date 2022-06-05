@@ -1,5 +1,6 @@
 const {MealModel} =require("../models/mealPlanModel");
-
+const { QueryTypes } = require('sequelize');
+const  sequelize = require("../configs/database");
 async function addMealPlan(req, res) {
   
     const  target_time= req.body.target_time,
@@ -27,8 +28,14 @@ async function fetchMealPlan (userId){
 
 
  async function fetchAllMealPlans (req,res){
-       
-    const plans = await MealModel.findAll();
+  const plans= await sequelize.query(
+    "SELECT id,Name,note,mealPlan,current_weight,target_weight,veg_prefer,target_time,req_date,email,mobileNo,mealplan.status FROM mealplan left outer join user on mealplan.username=user.username",
+    {
+    
+      type: QueryTypes.SELECT
+    }
+  );
+    // const plans = await MealModel.findAll();
     //   const users = await UserModel.findAll();
       if (plans === null) {
       return null;
