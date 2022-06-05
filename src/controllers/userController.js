@@ -3,11 +3,11 @@ const {validateUser,validateUpdateUser, UserModel} = require("../models/userMode
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
 const {userModel} = require("../models")
-
+const _ = require('lodash');
 
 async function register(req, res, next) {
   const { error,value } = userModel.validateUser(req.body);
-const _ = require('lodash');
+
 const circularJSON = require('circular-json');
 async function register(req, res, next) {
   //  res.status(400).send(req.body)
@@ -38,20 +38,20 @@ async function getProfileDetails(req,res,next){
   if (!token) return res.status(401).send('Access denied. No token provided.');
 
   try {
-    const decoded = jwt.verify(token, jwtPrivateKey);
-   
-    const details = await UserModel.findOne({ where: { username: decoded['username'] } });
-   
-    if(details === null){
-      res.send("NO Such user in the system");
-    }else{
-      res.send(_.pick(details, ['firstName','lastName','email','mobileNo','gender','birthday','address']));
-    }
-   
+    var decoded = jwt.verify(token, jwtPrivateKey);
   }
   catch (ex) {
     res.status(400).send('Invalid token.');
   }
+    const details = await UserModel.findOne({ where: { username: decoded['username'] } });
+   
+    if(details === null){
+      return res.send("NO Such user in the system");
+    }else{
+      res.send(_.pick(details, ['username','Name','email','mobileNo','gender','birthday','address']));
+    }
+   
+  
   
   next();
 }
