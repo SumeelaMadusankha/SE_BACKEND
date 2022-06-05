@@ -95,11 +95,20 @@ async function getPaymentList(){
     return user;
   
   }
- 
+  async function fetchPaymentsSpecificToUser (req,res){
+       
+    const payments = await PaymentModel.findAll({where:{username:req.username}});
+    //   const users = await UserModel.findAll();
+      if (payments === null) {
+      return null;
+      } else {
+      
+      return payments;       }
+  }
 module.exports={
     payMonthlyFee,
     getPaymentList,
     acceptPayment,
     checkMonthlyFeePaid,
-    declinePayment
+    declinePayment,fetchPaymentsSpecificToUser
 }

@@ -14,6 +14,7 @@ router.get('/me',auth,userController.getProfileDetails);
 router.get('/mealPlan',auth,mealControler.getSpecificMealPlans);
 //update user profile
 router.get('/workPlan',auth,workControler.getSpecificWorkOutPlans);
+
 router.put('/update',auth,userController.updateProfileDetails);
 
 

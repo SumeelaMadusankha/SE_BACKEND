@@ -11,6 +11,7 @@ const accept=require("../middlewares/adminAccepted");
 router.post('/',auth,paymentController.monthlyPayment );
 //get payment list
 router.get('/paymentList',auth,admin,paymentController.getPaymentList)
+router.get('/paymentOfSpecificUser',auth,paymentController.getPaymentListOfUser)
 //accept payment
 router.get('/:id',auth,admin,paymentController.acceptPayment)
 router.get('/decline/:id',auth,admin,paymentController.declinePayment)
