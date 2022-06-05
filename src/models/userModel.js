@@ -3,21 +3,21 @@ const { genSaltSync, hashSync, compareSync } = require('bcryptjs');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 
-const UserModel =  sequelize.define("users",
+const UserModel =  sequelize.define("user",
 {
-    id:{
-        type:DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement:true,
-        primaryKey:true
-    },
-    firstName: {
+  
+  username:{
+    type:DataTypes.STRING,
+    allowNull:false,
+    primaryKey:true,
+    unique: true
+    
+  },
+    Name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
-        type: DataTypes.STRING,
-      },
+      
       email: {
         type: DataTypes.STRING,
       },
@@ -36,33 +36,26 @@ const UserModel =  sequelize.define("users",
           type: DataTypes.STRING,
           allowNull: false,
       },
-      weight: {
-          type: DataTypes.DOUBLE,
-          allowNull: false,
-      },
-      height: {
-          type: DataTypes.DOUBLE,
-          allowNull: false,
-      },
-      username:{
-        type:DataTypes.STRING,
-        allowNull:false,
-        unique: true
-        
-      },password:{
-        type:DataTypes.STRING,
-        allowNull:false
-      },
+      registrationFee: {
+        type: DataTypes.ENUM('paid','notpaid'),
+        defaultValue: 'notpaid'
+    },
+    registerFeeSlip: {
+      type: DataTypes.STRING,
+      allowNull:true
+  },
+  status: {
+    type: DataTypes.ENUM('pending','declined','accepted'),
+    defaultValue: 'pending'
+}
          
   
-      role:{
-        type:DataTypes.ENUM("Admin","User")
-      }
+      
     },
       {
         sequelize,
         modelName:'User',
-        tableName:'users',
+        tableName:'user',
         timestamps: false,
       },
     
@@ -73,6 +66,25 @@ const UserModel =  sequelize.define("users",
 
 function validateUser(user) {
   const schema = Joi.object({
+    Name: Joi.string().min(1).max(50).required(),
+    email: Joi.string().min(5).max(255).required().email(),
+    mobileNo:Joi.string().length(10).pattern(/^[0-9]+$/).required(),
+    gender: Joi.string().valid('male','female').required(),
+    birthday: Joi.date().raw().required(),
+    address: Joi.string().min(1).max(50).required(),
+    username: Joi.string().min(6).required(),
+    password: Joi.string().min(6).required(),
+    confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
+    // registerFeeSlip:Joi.required()
+    
+  });
+
+
+  return schema.validate(user)
+}
+
+function validateUpdateUser(user) {
+  const schema = Joi.object({
     firstName: Joi.string().min(1).max(50).required(),
     lastName: Joi.string().min(1).max(50).required(),
     email: Joi.string().min(5).max(255).required().email(),
@@ -80,13 +92,9 @@ function validateUser(user) {
     gender: Joi.string().valid('male','female').required(),
     birthday: Joi.date().raw().required(),
     address: Joi.string().min(1).max(50).required(),
-    weight: Joi.number().positive().greater(0).required(),
-    height: Joi.number().positive().greater(0).required(),
-    username: Joi.string().min(6).required(),
-    password: Joi.string().min(6).required(),
-    confirmPassword: Joi.string().valid(Joi.ref('password')).required(),
-    role: Joi.string().valid('Admin', 'User').required()
+   
   });
+  
 
   return schema.validate(user)
 }
@@ -94,19 +102,11 @@ function validateUser(user) {
 
 
 
-function hashPassword(password) {
-    const salt = genSaltSync(12);
-    const hashedPassword = hashSync(password, salt);
-    return hashedPassword;
-}
 
- function verifyPassword(passwordAttempted, hashedPassword) {
-    return compareSync(passwordAttempted, hashedPassword);
-}
 
 module.exports = {
   validateUser,
   UserModel,
-  hashPassword,
-  verifyPassword
+  
+  validateUpdateUser
  }
