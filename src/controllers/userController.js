@@ -29,7 +29,7 @@ async function register(req, res, next) {
     }
   }
 
-
+}
 
 
 
@@ -74,10 +74,13 @@ async function updateProfileDetails(req,res,next){
        next(err);
      }
 }
+
+
+
 module.exports = {
     
   register,
   getProfileDetails,
   updateProfileDetails
   
-};
+}

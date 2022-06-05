@@ -1,10 +1,5 @@
-const auth = require('../middlewares/auth.middleware');
 const express = require('express'),
   router = express.Router();
-  const {userController} = require('../controllers/');
-// get user lists
-router.get('/list',auth.authenticateToken, userController.getUsers);
-
   const userController = require('../controllers/userController');
   const mealControler = require('../controllers/mealController');
   const workControler = require('../controllers/workoutController');
@@ -19,7 +14,6 @@ router.get('/me',auth,userController.getProfileDetails);
 router.get('/mealPlan',auth,mealControler.getSpecificMealPlans);
 //update user profile
 router.get('/workPlan',auth,workControler.getSpecificWorkOutPlans);
-
 router.put('/update',auth,userController.updateProfileDetails);
 
 
