@@ -25,4 +25,17 @@ router.get('/workoutList',auth,admin, workoutcontroller.getAllWorkoutPlans);
 router.post('/addAdmin',auth,admin,adminController.addAdmin );
 
 router.get('/pendingUserList',auth,admin, adminController.getPendingUserList);
+
+//admin dashboard routes
+router.get('/pendingRegistrationsCount',auth,admin, adminController.getPendingRegistrations);
+router.get('/me',auth,admin, adminController.getAdminDetatils);
+router.get('/pendingPaymentsCount',auth,admin, adminController.getPendingPaymentsCount);
+router.get('/acceptedgPaymentsCount',auth,admin, adminController.getAcceptedPaymentsCount);
+
+router.get('/pendingWorkOutPlanRequestCount',auth,admin, adminController.getPendingWorkOutRequestCount);
+router.get('/pendingMealPlanRequestCount',auth,admin, adminController.getPendingMealPlanRequestCount);
+router.get('/acceptedRegistrationsCount',auth,admin, adminController.getAcceptedRegistrtions);
+router.get('/acceptedAdminsCount',auth,admin, adminController.getAddminCount);
+router.get('/uploadedMealPlanCount',auth,admin, adminController.getUploadedMealPlanCount);
+router.get('/uploadedWorkOutPlanCount',auth,admin, adminController.getUploadedWorkoutRequestCount);
 module.exports = router; 

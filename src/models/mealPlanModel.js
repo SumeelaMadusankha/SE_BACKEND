@@ -62,7 +62,7 @@ function validateMealPlan(mealPlan) {
     current_weight: Joi.number().positive().greater(0).required(),
     target_weight: Joi.number().positive().greater(0).required(),
     veg_prefer: Joi.string().valid('veg','non-veg').required(),
-    note: Joi.string(),
+   note:Joi.string().allow(),
     target_time:Joi.number().positive().greater(0).required(),
   });
 

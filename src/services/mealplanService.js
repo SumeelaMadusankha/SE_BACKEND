@@ -29,7 +29,7 @@ async function fetchMealPlan (userId){
 
  async function fetchAllMealPlans (req,res){
   const plans= await sequelize.query(
-    "SELECT id,Name,note,mealPlan,current_weight,target_weight,veg_prefer,target_time,req_date,email,mobileNo,mealplan.status FROM mealplan left outer join user on mealplan.username=user.username",
+    "SELECT id,Name,note,mealPlan,current_weight,target_weight,veg_prefer,target_time,req_date,email,mobileNo,mealplan.status,gender FROM mealplan left outer join user on mealplan.username=user.username",
     {
     
       type: QueryTypes.SELECT

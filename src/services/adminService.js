@@ -128,7 +128,161 @@ async function declineAdmin(req,res){
   return user;
 
 }
+async function acceptedUserCount (req){
+    
+  const acceptedUsersCount= await sequelize.query(
+      "SELECT distinct count(username) as noOfRegistrations FROM `user` where status= :status ",
+      {
+       replacements:{status: 'accepted'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (acceptedUsersCount === null) {
+  return null;
+  } else {
+  
+  return acceptedUsersCount;       }
+}
 
+async function pendingUserCount (req){
+    
+  const pendingRegistrations= await sequelize.query(
+      "SELECT distinct count(username) as noOfPendingRegistrations FROM `user` where status= :status ",
+      {
+       replacements:{status: 'pending'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (pendingRegistrations === null) {
+  return null;
+  } else {
+  
+  return pendingRegistrations;       }
+}
+
+async function acceptedAdminCount (req){
+    
+  const acceptedAdminsCount= await sequelize.query(
+      "SELECT distinct count(username) as noOfAdminCount FROM `admin` where status= :status ",
+      {
+       replacements:{status: 'accepted'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (acceptedAdminsCount === null) {
+  return null;
+  } else {
+  
+  return acceptedAdminsCount;       }
+}
+async function pendingMealPlanRequest (req){
+    
+  const pendinMelaPlanRequest= await sequelize.query(
+      "SELECT distinct count(id) as noOfMealPlanPending FROM `mealplan` where status= :status ",
+      {
+       replacements:{status: 'pending'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (pendinMelaPlanRequest === null) {
+  return null;
+  } else {
+  
+  return pendinMelaPlanRequest;       }
+}
+async function pendingWorkOutPlanRequest (req){
+    
+  const pendinWorkOutPlanRequest= await sequelize.query(
+      "SELECT distinct count(id) as noOfWorkOutPlanPending FROM `workoutplan` where status= :status ",
+      {
+       replacements:{status: 'pending'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (pendinWorkOutPlanRequest === null) {
+  return null;
+  } else {
+  
+  return pendinWorkOutPlanRequest;       }
+}
+async function uploadedWorkOutPlanRequest (req){
+    
+  const uploadedworkOutPlans= await sequelize.query(
+      "SELECT distinct count(id) as noOfWorkOutPlanUploaded FROM `workoutplan` where status= :status ",
+      {
+       replacements:{status: 'uploaded'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (uploadedworkOutPlans === null) {
+  return null;
+  } else {
+  
+  return uploadedworkOutPlans;       }
+}
+
+async function uploadedmealPlanRequest (req){
+    
+  const uploadedmealPlans= await sequelize.query(
+      "SELECT distinct count(id) as noOfmealPlanUploaded FROM `mealplan` where status= :status ",
+      {
+       replacements:{status: 'uploaded'},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (uploadedmealPlans === null) {
+  return null;
+  } else {
+  
+  return uploadedmealPlans;       }
+}
+async function pendingPayments (req){
+  const month = new Date().toLocaleString(
+    'default', {month: 'long'}
+  );
+  const year =  new Date().getFullYear().toString();
+  const pendingPaymentsCount= await sequelize.query(
+      "SELECT distinct count(id) as noOfpaymentCount FROM `monthlypayment` where paymentStatus= :status and month=:month_ and year=:year_ ",
+      {
+       replacements:{status: 'pending',month_:month,year_:year},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (pendingPaymentsCount === null) {
+  return null;
+  } else {
+  
+  return pendingPaymentsCount;       }
+}
+
+
+async function acceptedPayments (req){
+  const month = new Date().toLocaleString(
+    'default', {month: 'long'}
+  );
+  const year =  new Date().getFullYear().toString();
+  const acceptedPaymentsCount= await sequelize.query(
+      "SELECT distinct count(id) as noOfpaymentCount FROM `monthlypayment` where paymentStatus= :status and month=:month_ and year=:year_ ",
+      {
+       replacements:{status: 'success',month_:month,year_:year},
+        type: QueryTypes.SELECT
+      }
+    );
+  
+  if (acceptedPaymentsCount === null) {
+  return null;
+  } else {
+  
+  return acceptedPaymentsCount;       }
+}
   module.exports={
       addAdmin,
       fetchAdmins,
@@ -136,6 +290,7 @@ async function declineAdmin(req,res){
       acceptReg,
       declineReg,
       declineAdmin,
-      fetchPendingUsersList
+      fetchPendingUsersList,
+      acceptedUserCount,acceptedPayments,pendingPayments,acceptedAdminCount,pendingUserCount,uploadedWorkOutPlanRequest,uploadedmealPlanRequest,pendingMealPlanRequest,pendingWorkOutPlanRequest
       
   }

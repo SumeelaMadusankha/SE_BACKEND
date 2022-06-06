@@ -31,7 +31,7 @@ async function fetchWorkoutPlan (userId){
  async function fetchAllworkPlans (req,res){
        
   const plans= await sequelize.query(
-    "SELECT id,Name,note,workoutPlan,current_weight,target_weight,workout_frequency,target_time,date,email,mobileNo,workoutplan.status,targets FROM workoutplan left outer join user on workoutplan.username=user.username",
+    "SELECT id,Name,note,workoutPlan,current_weight,target_weight,workout_frequency,target_time,date,email,mobileNo,workoutplan.status,targets,gender FROM workoutplan left outer join user on workoutplan.username=user.username",
     {
     
       type: QueryTypes.SELECT

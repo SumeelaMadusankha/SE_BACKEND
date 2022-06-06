@@ -30,6 +30,7 @@ async function uploadmealplan(req,res){
               return res.status(400).send(extension+'is not allowed'
               );
             }
+        
             const mealplan = await MealModel.update({status:'uploaded',	mealPlan:URL},{
               where: {
                 id: req.body.id_

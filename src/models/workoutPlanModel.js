@@ -68,7 +68,7 @@ function validateWorkOutPlan(workoutplanModel) {
     target_time: Joi.number().positive().greater(0).required(),
     workout_frequency: Joi.string().valid('Once a week or never','Twice a week','Three times a week or more'),
     targets: Joi.string().valid('Build muscle','Lose Weight','Get fit','Feel like an athlete').required(),
-    note:Joi.string()
+   
   });
 
   return schema.validate(workoutplanModel)

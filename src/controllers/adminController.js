@@ -90,6 +90,33 @@ async function addAdmin(req, res, next) {
     
     next();
   }
+
+  async function getPendingRegistrations(req,res,next){
+    const token = req.header('x-auth-token');
+    if (!token) return res.status(401).send('Access denied. No token provided.');
+  
+    try {
+      var decoded = jwt.verify(token, jwtPrivateKey);
+     
+      
+     
+     
+    }
+    catch (ex) {
+      res.status(400).send('Invalid token.');
+    }
+    const list = await admin.pendingUserCount(req);
+    
+    if(list === null){
+      res.send("NO Records");
+    }else{
+      res.send(list);
+    }
+    
+    
+    next();
+  }
+
   async function acceptRegistration(req,res,next){
     
       
@@ -119,16 +146,241 @@ async function declineAdmin(req,res,next){
  
 
 }
+async function getAcceptedRegistrtions(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
 
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.acceptedUserCount(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+async function getAddminCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.acceptedAdminCount(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+
+async function getPendingPaymentsCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.pendingPayments(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+async function getAcceptedPaymentsCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.acceptedPayments(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+async function getPendingWorkOutRequestCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.pendingWorkOutPlanRequest(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+async function getPendingMealPlanRequestCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.pendingMealPlanRequest(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+async function getUploadedMealPlanCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.uploadedmealPlanRequest(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+async function getUploadedWorkoutRequestCount(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+   
+    
+   
+   
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+  const list = await admin.uploadedWorkOutPlanRequest(req);
+  
+  if(list === null){
+    res.send("NO Records");
+  }else{
+    res.send(list);
+  }
+  
+  
+  next();
+}
+
+async function getAdminDetatils(req,res,next){
+  const token = req.header('x-auth-token');
+  if (!token) return res.status(401).send('Access denied. No token provided.');
+
+  try {
+    var decoded = jwt.verify(token, jwtPrivateKey);
+  }
+  catch (ex) {
+    res.status(400).send('Invalid token.');
+  }
+    const details = await AdminModel.findOne({ where: { username: decoded['username'] } });
+   
+    if(details === null){
+      return res.send("NO Such user in the system");
+    }else{
+      res.send(_.pick(details, ['Name','email','mobileNo','gender','birthday','address']));
+    }
+   
+  
+  
+  next();
+}
   module.exports = {
    
     addAdmin,
+    getAdminDetatils,
     getUsers,
     getAdmins,
     acceptRegistration,
     declineRegistration,
     declineAdmin,
-    getPendingUserList
+    getPendingUserList,getPendingRegistrations,getAcceptedRegistrtions,getAddminCount,getPendingPaymentsCount,getAcceptedPaymentsCount,
+    getPendingWorkOutRequestCount,getPendingMealPlanRequestCount,getUploadedMealPlanCount,getUploadedWorkoutRequestCount
 
     
   };
