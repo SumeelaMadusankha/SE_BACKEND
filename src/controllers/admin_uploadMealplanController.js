@@ -14,11 +14,11 @@ async function uploadMP(req,res,next){
     req.username= decoded['username'];
     
   }catch (ex) {
-    res.status(400).send('Invalid token.');
+    return res.status(400).send('Invalid token.');
   }
   
   const plan = await uploadMealPlan.uploadmealplan(req,res);
-  res.send(plan);
+  return res.send(plan);
 
 }
 

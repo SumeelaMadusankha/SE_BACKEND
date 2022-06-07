@@ -2,7 +2,7 @@ const {DataTypes} = require('sequelize');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 
-const PaymentModel =  sequelize.define("monthlyPayment",
+const PaymentModel =  sequelize.define("monthlypayment",
 {
     id:{
         type:DataTypes.INTEGER,
@@ -40,7 +40,7 @@ const PaymentModel =  sequelize.define("monthlyPayment",
       {
         sequelize,
         modelName:'Payment',
-        tableName:'monthlyPayment',
+        tableName:'monthlypayment',
         timestamps: false,
       },
     

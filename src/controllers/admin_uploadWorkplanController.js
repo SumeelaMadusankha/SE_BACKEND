@@ -12,11 +12,11 @@ async function uploadWoP(req,res,next){
     req.username= decoded['username'];
     
   }catch (ex) {
-    res.status(400).send('Invalid token.');
+    return res.status(400).send('Invalid token.');
   }
 
   const pay = await uploadWorkoutplan.uploadworkoutplan(req,res);
-  res.send(pay);
+   return res.send(pay);
 
 }
 

@@ -3,7 +3,7 @@ const { genSaltSync, hashSync, compareSync } = require('bcryptjs');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 
-const AdminModel =  sequelize.define("users",
+const AdminModel =  sequelize.define("admin",
 {
     
     username:{

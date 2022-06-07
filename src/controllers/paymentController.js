@@ -17,7 +17,7 @@ async function monthlyPayment(req,res,next){
     res.status(400).send('Invalid token.');
   }
   const pay = await payment.payMonthlyFee(req,res);
-  res.send(pay);
+  return res.send("pay");
 
 }
 async function getPaymentList(req,res,next){

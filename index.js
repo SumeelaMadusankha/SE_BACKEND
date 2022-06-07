@@ -13,11 +13,11 @@ const {AuthModel} = require("./src/models/authModel");
 const {PaymentModel}=require('./src/models/paymentModel');
 const {workoutplanModel} =require('./src/models/workoutPlanModel');
 const {MealModel} =require('./src/models/mealPlanModel');
-UserModel.hasOne(PaymentModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
-UserModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
-UserModel.hasMany(workoutplanModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
-UserModel.hasMany(MealModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
-AdminModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
+// UserModel.hasOne(PaymentModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
+// UserModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
+// UserModel.hasMany(workoutplanModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
+// UserModel.hasMany(MealModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
+// AdminModel.hasOne(AuthModel, { sourceKey: 'username', foreignKey: 'username', onDelete: "CASCADE",onUpdate:"CASCADE" });
 sequelize.sync({ alter: true });
 
 // make server object that contain port property and the value for our server.
@@ -26,7 +26,7 @@ const req = require('express/lib/request');
 // routers
 const usersRouter = require('./src/routes/userRoute');
 const authRouter = require('./src/routes/authRoute');
-const loginRouter = require('./src/routes/login.route');
+
 
 const adminRouter = require("./src/routes/adminRoute");
 const paymentRouter = require("./src/routes/paymentRoute");
@@ -53,7 +53,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // use router
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
-app.use('/app',loginRouter);
+
 app.use('/admin', adminRouter);
 app.use('/payment', paymentRouter);
 app.use('/mealplan', mealplanRoute);

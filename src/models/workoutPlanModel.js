@@ -2,7 +2,7 @@ const {DataTypes} = require('sequelize');
 
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
-const workoutplanModel =  sequelize.define("workOutPlan",
+const workoutplanModel =  sequelize.define("workoutplan",
 {
     id:{
         type:DataTypes.INTEGER,
@@ -31,7 +31,7 @@ const workoutplanModel =  sequelize.define("workOutPlan",
     },
     
     workout_frequency:{
-        type: DataTypes.ENUM("Once aweek or never","Twice aweek","Three times week or more"),
+        type: DataTypes.ENUM("Once a week or never","Twice a week","Three times a week or more"),
         allowNull: false,
     },
     targets: {
@@ -55,7 +55,7 @@ const workoutplanModel =  sequelize.define("workOutPlan",
 {
         sequelize,
         modelName:'workoutplanModel',
-        tableName:'workoutPlan',
+        tableName:'workoutplan',
         timestamps: false,
 },
 );

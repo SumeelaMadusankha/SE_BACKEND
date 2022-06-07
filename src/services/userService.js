@@ -82,8 +82,7 @@ const circularJSON = require('circular-json');
 
   
 async function updateUserProfile(req,res){
-     const  firstName = req.body.firstName,
-           lastName = req.body.lastName,
+     const  name=req.body.Name,
            email= req.body.email,
            mobileNo=req.body.mobileNo,
            gender= req.body.gender,
@@ -93,7 +92,7 @@ async function updateUserProfile(req,res){
 
           try{
           
-            const result = await UserModel.update({firstName:firstName,lastName:lastName,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address},{
+            const result = await UserModel.update({Name:name,email:email,mobileNo:mobileNo,gender:gender,birthday:birthday,address:address},{
               where: {
                 username: username
               }

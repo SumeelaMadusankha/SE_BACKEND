@@ -11,9 +11,9 @@ const express = require('express'),
 router.post('/register',userController.register);
 //get profile details
 router.get('/me',auth,userController.getProfileDetails);
-router.get('/mealPlan',auth,mealControler.getSpecificMealPlans);
+router.get('/mealPlan',auth,payment,mealControler.getSpecificMealPlans);
 //update user profile
-router.get('/workPlan',auth,workControler.getSpecificWorkOutPlans);
+router.get('/workPlan',auth,payment,workControler.getSpecificWorkOutPlans);
 router.put('/update',auth,userController.updateProfileDetails);
 
 

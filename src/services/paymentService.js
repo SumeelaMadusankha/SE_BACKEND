@@ -29,9 +29,7 @@ async function payMonthlyFee(req,res){
              await util.promisify(file.mv)("./public"+URL);
 
             }catch(err){
-              res.status(500).json({
-                message:err
-              })
+              return  res.status(400).send(extension+"not allowed")
             }
             const payment = await PaymentModel.create({username:username,month:month,slipPath:URL,description:description,year:year});
              return payment;
@@ -85,12 +83,11 @@ async function getPaymentList(){
       month:new Date().toLocaleString(
         'default', {month: 'long'}
       ),
-      year:new Date().getFullYear().toString()
+      year:new Date().getFullYear().toString(),
+      paymentStatus:'success'
 
     }});
-    if (user===null) {
-        return null
-    }
+    
   
     return user;
   

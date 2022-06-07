@@ -2,13 +2,12 @@ const user = require('../services/userService');
 const {validateUser,validateUpdateUser, UserModel} = require("../models/userModel");
 const {jwtPrivateKey} = require('../configs/config');
 const jwt = require('jsonwebtoken');
-const {userModel} = require("../models")
+
 const _ = require('lodash');
 
-async function register(req, res, next) {
-  const { error,value } = userModel.validateUser(req.body);
 
-const circularJSON = require('circular-json');
+
+// const circularJSON = require('circular-json');
 async function register(req, res, next) {
   //  res.status(400).send(req.body)
   const { error,value } = validateUser(req.body);
@@ -29,7 +28,7 @@ async function register(req, res, next) {
     }
   }
 
-}
+
 
 
 
@@ -66,7 +65,7 @@ async function updateProfileDetails(req,res,next){
     const decoded = jwt.verify(token, jwtPrivateKey);
     req.username=decoded['username'];
     let  u = await user.updateUserProfile(req,res);
-    res.send(_.pick(u, ['firstName','lastName','email','mobileNo','gender','birthday','address']));
+    res.send(_.pick(u, ['Name','email','mobileNo','gender','birthday','address']));
     next();
       
      } catch (err) {

@@ -107,6 +107,5 @@ function validateUpdateUser(user) {
 module.exports = {
   validateUser,
   UserModel,
-  
   validateUpdateUser
  }

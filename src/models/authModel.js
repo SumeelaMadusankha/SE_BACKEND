@@ -3,7 +3,7 @@ const { genSaltSync, hashSync, compareSync } = require('bcryptjs');
 const  sequelize = require("../configs/database")
 const Joi = require('joi');
 
-const AuthModel =  sequelize.define("userAccount",
+const AuthModel =  sequelize.define("useraccount",
 {
     
    
@@ -26,7 +26,7 @@ const AuthModel =  sequelize.define("userAccount",
       {
         sequelize,
         modelName:'Auth',
-        tableName:'userAccount',
+        tableName:'useraccount',
         timestamps: false,
       },
     
